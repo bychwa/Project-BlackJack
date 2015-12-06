@@ -6,17 +6,22 @@ angular.module('starter.controllers', ['ngCordova'])
     
     $scope.select_usertype=function(user){
       $rootScope.user=user;
-      $state.go('home-username');
+      if($rootScope.user.type=='deck'){
+          $state.go('home-inviteusers');
+        }else{
+          $state.go('home-username');
+        }
     }
+  })
+
+.controller('UsernameCtrl', function($scope,$rootScope, $state) {
+    
+    $rootScope.user=$rootScope.user;
 
     $scope.select_username=function(user){
       
-        $rootScope.user=user;
-        if($rootScope.user.type=='deck'){
-          $state.go('home-inviteusers');
-        }else{
-          $state.go('home-acceptinvitation');
-        }
+        $rootScope.user=user;        
+        $state.go('home-acceptinvitation');
     }
 
    
@@ -53,7 +58,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
 
 })
-.controller('PlayerGameCtrl',function($scope,$rootScope,$cordovaBarcodeScanner,Game){
+.controller('PlayerJoinGameCtrl',function($scope,$rootScope,$cordovaBarcodeScanner,Game){
   
     $rootScope.user=$rootScope.user;
   
@@ -74,22 +79,9 @@ angular.module('starter.controllers', ['ngCordova'])
           });
     };
 })
-.controller('DashCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
- 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('PlayerGameCtrl',function($scope,$rootScope,$cordovaBarcodeScanner,Game){
+  
+    $rootScope.user=$rootScope.user;
+    
 });

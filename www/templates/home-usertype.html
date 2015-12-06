@@ -10,7 +10,7 @@
             <input type="radio" ng-model="user.type" name="user.type" value="player"/>
               <div class="radio-content"> <div class="item-content"> Player </div> <i class="radio-icon ion-checkmark"></i></div>
           </label>
-          <button class="button button-block button-negative" ng-disabled="!user.type" ui-sref="home-username" ng-click="select_usertype(user)">
+          <button class="button button-block button-negative" ng-disabled="!user.type" ng-click="select_usertype(user)">
             Continue {{ user.type? ' as '+ user.type:'' }}
           </button>
         </div>
