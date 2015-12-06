@@ -1,15 +1,22 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$cordovaStatusbar) {
+
+
   $ionicPlatform.ready(function() {
+      
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+      
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
 
     }
+    
+    ionic.Platform.fullScreen();
     if (window.StatusBar) {
-      StatusBar.styleDefault();
+      return StatusBar.hide();
     }
+
   });
 })
 

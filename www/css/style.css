@@ -1,0 +1,43 @@
+
+/* header */
+.bar.bar-stable {
+    background-color: #2196F3;
+    color: #2196F3;
+}
+.bar.bar-stable .title {
+    background-color:#2196F3;
+    color: #2196F3;
+}
+
+/* Supports vertical row center */
+.row, .scroll {
+  height: 100%;
+}
+
+.background, .background .pane, .background, .background .item-complex .item-content {
+    background-color: #2196F3;
+    color: #2196F3;
+}
+h4,h5,h3,h2{
+	
+}
+button{
+	color: #2196F3;
+}
+
+.custom_input { border-color:#ffffff; font-size:28px; padding:10px; border-width:3px; border-radius:8px; background-color:#2195f3; color:#ffffff; border-style:groove; box-shadow: 0px 0px 3px 0px rgba(255,255,255,.75);  } 
+.custom_input:focus { outline:none; }
+
+.item-icon-left ion-spinner {
+  float: left;
+  margin-left: -3.2em;
+  margin-right: 1em;
+  margin-top: -0.2em;
+ }
+
+.spinner svg {
+  width: 128px;
+  height: 128px;
+  stroke: white;
+  fill: white;
+}

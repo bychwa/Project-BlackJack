@@ -1,6 +1,8 @@
 angular.module('starter.controllers', ['ngCordova'])
 
-.controller('HomeCtrl', function($scope,$rootScope, $state) {
+.controller('HomeCtrl', function($scope,$rootScope, $state /*,$cordovaDevice*/) {
+    
+    //$scope.uuid = $cordovaDevice.getUUID();
     
     $rootScope.user=$rootScope.user;
     
@@ -30,7 +32,7 @@ angular.module('starter.controllers', ['ngCordova'])
 .controller('MasterGameCtrl', function($scope,$rootScope,$state,$interval,Game) {
  
   $rootScope.user=$rootScope.user;
-  
+  $scope.players=[];
   $scope.get_players=function(){
       Game.players($scope.game_code).then(function(data){
         $scope.players=data; 
@@ -44,7 +46,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
   Game.new().then(function(game_code){
       $scope.game_code=game_code;
-      $scope.game_url="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl="+game_code+"&chld=H|0";
+      $scope.game_url="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chl="+game_code+"&chld=H|0";
   });
   
   var promise = $interval($scope.get_players, 2000);
@@ -58,18 +60,17 @@ angular.module('starter.controllers', ['ngCordova'])
 
 
 })
-.controller('PlayerJoinGameCtrl',function($scope,$rootScope,$cordovaBarcodeScanner,Game){
+.controller('PlayerJoinGameCtrl',function($scope,$state,$rootScope,$cordovaBarcodeScanner,Game){
   
     $rootScope.user=$rootScope.user;
   
     $scope.scanBarcode = function() {
           $cordovaBarcodeScanner.scan().then(function(imageData) {
-              //var post_data=[{'user':user_data,'code':imageData.text}];
               $scope.user_data=$rootScope.user.name;
               $scope.scan_data=imageData.text;
 
               Game.join($scope.scan_data,$scope.user_data).then(function(data){
-                 //data.data.code; 
+             
                  $state.go('player-waiting');
                 
               });
@@ -80,7 +81,7 @@ angular.module('starter.controllers', ['ngCordova'])
     };
 })
 
-.controller('PlayerGameCtrl',function($scope,$rootScope,$cordovaBarcodeScanner,Game){
+.controller('PlayerGameCtrl',function($scope,$state,$rootScope,$cordovaBarcodeScanner,Game){
   
     $rootScope.user=$rootScope.user;
     
