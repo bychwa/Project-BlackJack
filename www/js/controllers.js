@@ -93,7 +93,6 @@ angular.module('starter.controllers', ['ngCordova'])
     $scope.cards = Cards.all();
     $scope.selected_card="";
     $scope.toogle_card_action=false;
-    
 
     $scope.toogleCardAction=function(){
       $scope.toogle_card_action=!$scope.toogle_card_action;
@@ -104,5 +103,10 @@ angular.module('starter.controllers', ['ngCordova'])
     $scope.select_card=function(card){
       $scope.selected_card=card.image;
     }
+})
 
+.controller('TableGameCtrl',function($scope,$state,$rootScope, Cards){
+  
+    //$rootScope.user=$rootScope.user;
+    $scope.cards = Cards.all();
 });
