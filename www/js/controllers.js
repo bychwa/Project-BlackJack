@@ -71,7 +71,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
               Game.join($scope.scan_data,$scope.user_data).then(function(data){
              
-                 $state.go('player-waiting');
+                 $state.go('player-hand');
                 
               });
 
@@ -84,5 +84,12 @@ angular.module('starter.controllers', ['ngCordova'])
 .controller('PlayerGameCtrl',function($scope,$state,$rootScope,$cordovaBarcodeScanner,Game){
   
     $rootScope.user=$rootScope.user;
+    
+})
+
+.controller('PlayerHandGameCtrl',function($scope,$state,$rootScope, Cards){
+  
+    $rootScope.user=$rootScope.user;
+    $scope.cards = Cards.all();
     
 });

@@ -39,4 +39,29 @@ angular.module('starter.services', [])
         return deferred.promise;
       },  
   };
+})
+
+.factory('Cards', function() {
+  // Might use a resource here that returns a JSON array
+
+  // Some fake testing data
+  var cards = [{
+    id: 0,
+    image: 'img/jack_of_diamonds2.png'
+  }, {
+    id: 1,
+    image: 'img/jack_of_diamonds2.png'
+  }, {
+    id: 2,
+    image: 'img/jack_of_diamonds2.png'
+  }, {
+    id: 3,
+    image: 'img/jack_of_diamonds2.png'
+  }];
+
+  return {
+    all: function() {
+      return cards;
+    }
+  };
 });
