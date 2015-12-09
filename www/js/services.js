@@ -50,13 +50,13 @@ angular.module('starter.services', [])
     image: 'img/jack_of_diamonds2.png'
   }, {
     id: 1,
-    image: 'img/jack_of_diamonds2.png'
+    image: 'img/jack_of_clubs2.png'
   }, {
     id: 2,
-    image: 'img/jack_of_diamonds2.png'
+    image: 'img/4_of_clubs.png'
   }, {
     id: 3,
-    image: 'img/jack_of_diamonds2.png'
+    image: 'img/3_of_diamonds.png'
   }];
 
   return {

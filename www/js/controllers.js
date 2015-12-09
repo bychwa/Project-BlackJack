@@ -81,7 +81,7 @@ angular.module('starter.controllers', ['ngCordova'])
     };
 })
 
-.controller('PlayerGameCtrl',function($scope,$state,$rootScope,$cordovaBarcodeScanner,Game){
+.controller('PlayerGameCtrl',function($scope,$state,$rootScope,$cordovaBarcodeScanner,Game,$ionicGesture){
   
     $rootScope.user=$rootScope.user;
     
@@ -91,5 +91,18 @@ angular.module('starter.controllers', ['ngCordova'])
   
     $rootScope.user=$rootScope.user;
     $scope.cards = Cards.all();
+    $scope.selected_card="";
+    $scope.toogle_card_action=false;
     
+
+    $scope.toogleCardAction=function(){
+      $scope.toogle_card_action=!$scope.toogle_card_action;
+    }
+    $scope.onSwipeDown=function(){
+      $scope.swipe_events="down"; alert("down");
+    }
+    $scope.select_card=function(card){
+      $scope.selected_card=card.image;
+    }
+
 });
