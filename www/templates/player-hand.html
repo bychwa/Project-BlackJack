@@ -1,11 +1,16 @@
 <ion-view view-title="{{ user.name }}">
   <ion-content scroll="false" class="padding">
-    <div class="row row-center">
-  		
+    <div class="">
+
   		<div class="container">
-    		<img class="box" ng-repeat="card in cards" src="{{ card.image }}">
+    		<ion-scroll direction="x">
+				<img class="box padding" ng-repeat="card in cards" width="60px" height="80px" src="{{ card.image }}">
+				<img class="box padding" ng-repeat="card in cards" width="60px" height="80px" src="{{ card.image }}">
+			</ion-scroll>
     	</div>
 
     </div>
+    
+
   </ion-content>
 </ion-view>
