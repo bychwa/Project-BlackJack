@@ -50,8 +50,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     url: '/player-waiting',
     templateUrl: 'templates/player-waiting.html',
     controller: 'PlayerGameCtrl'
+  })
+  .state('player-hand', {
+    url: '/player-hand',
+    templateUrl: 'templates/player-hand.html',
+    controller: 'PlayerHandGameCtrl'
   });
 
-  $urlRouterProvider.otherwise('/home-usertype');
+  $urlRouterProvider.otherwise('/player-hand');
 
 });
