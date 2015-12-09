@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ngCordova'])
+angular.module('starter.controllers', ['ngCordova',])
 
 .controller('HomeCtrl', function($scope,$rootScope, $state /*,$cordovaDevice*/) {
     
@@ -102,6 +102,9 @@ angular.module('starter.controllers', ['ngCordova'])
     }
     $scope.select_card=function(card){
       $scope.selected_card=card.image;
+    }
+    $scope.is_selected=function(card){
+      return $scope.selected_card==card.image? "card_selected":"";
     }
 })
 

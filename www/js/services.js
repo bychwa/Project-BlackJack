@@ -57,7 +57,15 @@ angular.module('starter.services', [])
   }, {
     id: 3,
     image: 'img/3_of_diamonds.png'
+  }, {
+    id: 4,
+    image: 'img/queen_of_hearts2.png'
+  }, {
+    id: 5,
+    image: 'img/jack_of_hearts2.png'
   }];
+
+
 
   return {
     all: function() {
