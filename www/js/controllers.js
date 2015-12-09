@@ -92,11 +92,4 @@ angular.module('starter.controllers', ['ngCordova'])
     $rootScope.user=$rootScope.user;
     $scope.cards = Cards.all();
     
-})
-
-.controller('TableGameCtrl',function($scope,$state,$rootScope, Cards){
-  
-    //$rootScope.user=$rootScope.user;
-    $scope.cards = Cards.all();
-    
 });
