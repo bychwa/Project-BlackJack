@@ -3,6 +3,7 @@
     <div class="row row-center">
         <div class="col col-center list">
             <img ng-src="{{ game_url }}" class="card padding ">
+            <qr type-number="8" correction-level="'M'" size="250" input-mode="'ALPHA_NUM'" text="game_code" image="true"></qr>
             <h4>Joined Players</h4>
             <p ng-if="players.length == 0 " style="color:white;">No one has joined yet!</p>
             <h5 class="text-center" style="color:white;" ng-repeat="player in players">{{ player.name +" has joined!" }}</h5>  

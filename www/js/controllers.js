@@ -44,7 +44,7 @@ angular.module('starter.controllers', ['ngCordova'])
   }
 
 
-  Game.new().then(function(game_code){
+  Game.new().then(function(game_code){ 
       $scope.game_code=game_code;
       $scope.game_url="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chl="+game_code+"&chld=H|0";
   });
