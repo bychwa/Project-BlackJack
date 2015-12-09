@@ -2,6 +2,8 @@
   "name": "HelloIonic",
   "private": "true",
   "devDependencies": {
+  	"qrcode": "latest",
+  	"angular-qr": "latest",
     "ionic": "driftyco/ionic-bower#1.1.1",
     "ngCordova": "~0.1.23-alpha"
   }
