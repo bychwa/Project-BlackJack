@@ -1,9 +1,12 @@
 <ion-view view-title="{{ user.name }}">
-  <ion-content scroll="false" class="padding text-center background">
-	  <div class="row">
-	        <div class="col" ng-repeat="card in cards" style="width:10px" height"363">
-        		<img ng-src="{{card.image}}">	            
-	        </div>
-	   </div>
-  </ion-content>
+    <ion-content scroll="false" class="padding text-center background">
+        <div class="row row-50" height="50">
+            <h3>Carte</h3>
+        </div>
+        <div class="row row-50">
+            <div ng-repeat="card in cards">
+                <img ng-src="{{card.image}}" width="200" height"200">               
+            </div>
+        </div>
+    </ion-content>
 </ion-view>
