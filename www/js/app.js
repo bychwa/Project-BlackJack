@@ -63,6 +63,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     controller: 'TableGameCtrl'
   });
 
-  $urlRouterProvider.otherwise('/player-hand');
+  $urlRouterProvider.otherwise('/home-usertype');
 
 });

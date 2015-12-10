@@ -16,6 +16,30 @@ angular.module('starter.services', [])
                     });
         return deferred.promise;
       },
+      
+    start_game: function(code) {
+          var deferred = $q.defer();
+              $http.get('http://api.bawalab.com/blackjack/start_game?code='+code).then(
+                        function(data){
+                          deferred.resolve(data.data);
+                      },
+                      function(error){
+                          deferred.reject(error);
+                      });
+          return deferred.promise;
+        },
+        
+    wait_game_start: function(code) {
+          var deferred = $q.defer();
+              $http.get('http://api.bawalab.com/blackjack/wait_game_start?code='+code).then(
+                        function(data){
+                          deferred.resolve(data.data);
+                      },
+                      function(error){
+                          deferred.reject(error);
+                      });
+          return deferred.promise;
+        },  
     players: function(code) {
           var deferred = $q.defer();
               $http.get('http://api.bawalab.com/blackjack/list_players?code='+code).then(
