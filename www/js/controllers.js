@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ngCordova'])
+angular.module('starter.controllers', ['ngCordova',])
 
 .controller('HomeCtrl', function($scope,$rootScope, $state /*,$cordovaDevice*/) {
     
@@ -40,12 +40,19 @@ angular.module('starter.controllers', ['ngCordova'])
       });
   }
   $scope.start_game=function(){
+    
     console.log('start the game');
+    Game.start_game($scope.game_code).then(function(data){
+        console.log('game started!');
+    
+    });
+
   }
 
 
   Game.new().then(function(game_code){
       $scope.game_code=game_code;
+      $scope.rootScope=game_code;
       $scope.game_url="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chl="+game_code+"&chld=H|0";
   });
   
@@ -66,12 +73,15 @@ angular.module('starter.controllers', ['ngCordova'])
   
     $scope.scanBarcode = function() {
           $cordovaBarcodeScanner.scan().then(function(imageData) {
+              
               $scope.user_data=$rootScope.user.name;
               $scope.scan_data=imageData.text;
 
               Game.join($scope.scan_data,$scope.user_data).then(function(data){
-             
-                 $state.go('player-hand');
+                
+                $rootScope.game_code = $scope.scan_data;
+                
+                $state.go('player-waiting');
                 
               });
 
@@ -81,15 +91,58 @@ angular.module('starter.controllers', ['ngCordova'])
     };
 })
 
-.controller('PlayerGameCtrl',function($scope,$state,$rootScope,$cordovaBarcodeScanner,Game){
+.controller('PlayerGameCtrl',function($scope,$state,$rootScope,$cordovaBarcodeScanner,Game,$interval,$ionicGesture){
   
     $rootScope.user=$rootScope.user;
+
+    //hardcoding game code
+    $scope.game_code= $rootScope.game_code;
     
+    $scope.wait_game_start=function(){
+
+        Game.wait_game_start($scope.game_code).then(function(data){
+            if(data==1){
+                $state.go("player-hand");
+            }            
+        });
+
+    }
+    var promise = $interval($scope.wait_game_start, 2000);
+    
+    // Cancel interval on page changes
+    $scope.$on('$destroy', function(){
+        if (angular.isDefined(promise)) {
+            $interval.cancel(promise);
+            promise = undefined;
+        }
+    });
+
 })
 
 .controller('PlayerHandGameCtrl',function($scope,$state,$rootScope, Cards){
   
     $rootScope.user=$rootScope.user;
     $scope.cards = Cards.all();
-    
+    $scope.selected_card="";
+    $scope.toogle_card_action=false;
+
+    $scope.toogleCardAction=function(){
+      $scope.toogle_card_action=!$scope.toogle_card_action;
+    }
+    $scope.onSwipeDown=function(){
+      $scope.swipe_events="down"; alert("down");
+    }
+    $scope.select_card=function(card){
+      $scope.selected_card=card.image;
+    }
+    $scope.is_selected=function(card){
+      return $scope.selected_card==card.image? "card_selected":"";
+    }
+})
+
+.controller('TableGameCtrl',function($scope,$state,$rootScope, Cards){
+  
+    //$rootScope.user=$rootScope.user;
+    $scope.cards = Cards.all();
 });
+

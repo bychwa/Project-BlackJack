@@ -16,6 +16,30 @@ angular.module('starter.services', [])
                     });
         return deferred.promise;
       },
+      
+    start_game: function(code) {
+          var deferred = $q.defer();
+              $http.get('http://api.bawalab.com/blackjack/start_game?code='+code).then(
+                        function(data){
+                          deferred.resolve(data.data);
+                      },
+                      function(error){
+                          deferred.reject(error);
+                      });
+          return deferred.promise;
+        },
+        
+    wait_game_start: function(code) {
+          var deferred = $q.defer();
+              $http.get('http://api.bawalab.com/blackjack/wait_game_start?code='+code).then(
+                        function(data){
+                          deferred.resolve(data.data);
+                      },
+                      function(error){
+                          deferred.reject(error);
+                      });
+          return deferred.promise;
+        },  
     players: function(code) {
           var deferred = $q.defer();
               $http.get('http://api.bawalab.com/blackjack/list_players?code='+code).then(
@@ -50,14 +74,22 @@ angular.module('starter.services', [])
     image: 'img/jack_of_diamonds2.png'
   }, {
     id: 1,
-    image: 'img/jack_of_diamonds2.png'
+    image: 'img/jack_of_clubs2.png'
   }, {
     id: 2,
-    image: 'img/jack_of_diamonds2.png'
+    image: 'img/4_of_clubs.png'
   }, {
     id: 3,
-    image: 'img/jack_of_diamonds2.png'
+    image: 'img/3_of_diamonds.png'
+  }, {
+    id: 4,
+    image: 'img/queen_of_hearts2.png'
+  }, {
+    id: 5,
+    image: 'img/jack_of_hearts2.png'
   }];
+
+
 
   return {
     all: function() {

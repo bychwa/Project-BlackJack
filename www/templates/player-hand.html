@@ -1,9 +1,27 @@
 <ion-view view-title="{{ user.name }}">
-  <ion-content scroll="false" class="padding text-center background">
-	  <div class="row">
-	        <div class="col" ng-repeat="card in cards" style="width:10px" height"363">
-        		<img ng-src="{{card.image}}">	            
-	        </div>
-	   </div>
+  <ion-content scroll="false" class="padding">
+  		<div class="container">
+		    <div class="row row-center left1">
+				<img class="padding col center_card" width="12px" height="12px" on-double-tap="toogleCardAction()" src="{{ selected_card }}">
+			</div>
+		</div>
+
+		<div class="row row-center div_action_buttons">
+	  		<div class="button-bar bar-dark action_buttons" ng-show="toogle_card_action">
+			  <a class="button">Play</a>
+			  <a class="button">Drop</a>
+			  <a class="button">hide</a>
+			</div>
+		</div>
+
+  		
+
+		
+		<div class="row div_footer">
+	  		<ion-scroll direction="x">
+				<img class="box {{ is_selected(card) }}" ng-repeat="card in cards" ng-click="select_card(card)" src="{{ card.image }}">
+			</ion-scroll>
+		</div>
+    	
   </ion-content>
 </ion-view>
