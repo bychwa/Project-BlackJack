@@ -1,10 +1,10 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
+angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform,$cordovaStatusbar) {
 
 
   $ionicPlatform.ready(function() {
-      
+    
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);

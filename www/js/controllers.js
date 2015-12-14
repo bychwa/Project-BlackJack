@@ -1,9 +1,16 @@
-angular.module('starter.controllers', ['ngCordova',])
+angular.module('starter.controllers', ['ngCordova'])
 
-.controller('HomeCtrl', function($scope,$rootScope, $state /*,$cordovaDevice*/) {
+.controller('HomeCtrl', function($scope,$rootScope,$ionicPlatform, $state,$timeout /*,$cordovaDevice*/) {
+    
+    $scope.audio_click = new Audio('audio/click.mp3');
+        
+    $scope.click=function(){
+        $scope.audio_click.play();
+    }
     
     //$scope.uuid = $cordovaDevice.getUUID();
-    
+    // 
+
     $rootScope.user=$rootScope.user;
     
     $scope.select_usertype=function(user){
@@ -138,6 +145,7 @@ angular.module('starter.controllers', ['ngCordova',])
     $scope.is_selected=function(card){
       return $scope.selected_card==card.image? "card_selected":"";
     }
+
 })
 
 .controller('TableGameCtrl',function($scope,$state,$rootScope, Cards){
