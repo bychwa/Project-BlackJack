@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.services','ionic.contrib.ui.cards'])
 
 .run(function($ionicPlatform,$cordovaStatusbar) {
 
@@ -63,6 +63,6 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     controller: 'TableGameCtrl'
   });
 
-  $urlRouterProvider.otherwise('/home-usertype');
+  $urlRouterProvider.otherwise('/player-hand');
 
 });

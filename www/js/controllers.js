@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ngCordova'])
 
-.controller('HomeCtrl', function($scope,$rootScope,$ionicPlatform, $state,$timeout /*,$cordovaDevice*/) {
+.controller('HomeCtrl', function($scope,$rootScope,$ionicPlatform,$state,$timeout /*,$cordovaDevice*/) {
     
     $scope.audio_click = new Audio('audio/click.mp3');
         
@@ -12,7 +12,7 @@ angular.module('starter.controllers', ['ngCordova'])
     // 
 
     $rootScope.user=$rootScope.user;
-    
+        
     $scope.select_usertype=function(user){
       $rootScope.user=user;
       if($rootScope.user.type=='deck'){
@@ -77,23 +77,39 @@ angular.module('starter.controllers', ['ngCordova'])
 
 
 })
-.controller('PlayerJoinGameCtrl',function($scope,$state,$rootScope,$cordovaBarcodeScanner,Game){
+.controller('PlayerJoinGameCtrl',function($scope,$state,$rootScope,$ionicPopup,$cordovaBarcodeScanner,Game){
   
     $rootScope.user=$rootScope.user;
   
     $scope.scanBarcode = function() {
           $cordovaBarcodeScanner.scan().then(function(imageData) {
-              
               $scope.user_data=$rootScope.user.name;
               $scope.scan_data=imageData.text;
+              
+              if($scope.scan_data.length > 10){
+              
+                  Game.join($scope.scan_data,$scope.user_data).then(function(data){
+                    $rootScope.game_code = $scope.scan_data;
+                    $state.go('player-waiting');
+                  });
+              
+              }else{
+                var alertPopup = $ionicPopup.alert({
+                                        title: 'Error Scanning',
+                                        template: '<p style="text-align:center;color:black;">Unsuccessful Scan! Scan to Join Game!</p>',
+                                        buttons: [{
+                                                    text: 'Okej!',
+                                                    type: 'button-positive'
+                                                    
+                                                 }]
+                                     });
 
-              Game.join($scope.scan_data,$scope.user_data).then(function(data){
-                
-                $rootScope.game_code = $scope.scan_data;
-                
-                $state.go('player-waiting');
-                
-              });
+                alertPopup.then(function(res) {
+                    console.log('Unsuccessful scanning');
+                });
+
+              }
+
 
           }, function(error) {
               console.log(error);
@@ -136,6 +152,7 @@ angular.module('starter.controllers', ['ngCordova'])
     $scope.selected_card="";
     $scope.toogle_card_action=false;
 
+    $scope.center_card_class="";
     $scope.toogleCardAction=function(){
       $scope.toogle_card_action=!$scope.toogle_card_action;
     }
@@ -147,6 +164,15 @@ angular.module('starter.controllers', ['ngCordova'])
     }
     $scope.is_selected=function(card){
       return $scope.selected_card==card.image? "card_selected":"";
+    }
+    $scope.onSwipeUp=function(){
+      //angular.element('#select_foto').trigger('click');
+      //$('.center_card').addClass("SlideIn");
+      //document.querySelector('.center_card').addClass("mmm");
+      //angular.element(".center_card").addClass("SlideIn");
+      $scope.center_card_class="slide-in";
+    
+      //alert("up");
     }
 
 })
