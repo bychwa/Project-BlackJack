@@ -40,10 +40,12 @@ angular.module('starter.controllers', ['ngCordova'])
  
   $rootScope.user=$rootScope.user;
   $scope.players=[];
+  //$rootScope.players=$scope.players;
   $scope.get_players=function(){
       Game.players($scope.game_code).then(function(data){
         $scope.players=data; 
         console.log(data);
+        $rootScope.players=$scope.players;
       });
   }
   $scope.start_game=function(){
@@ -51,6 +53,7 @@ angular.module('starter.controllers', ['ngCordova'])
     console.log('start the game');
     Game.start_game($scope.game_code).then(function(data){
         console.log('game started!');
+        $state.go('table');
     
     });
 
@@ -148,9 +151,26 @@ angular.module('starter.controllers', ['ngCordova'])
 
 })
 
-.controller('TableGameCtrl',function($scope,$state,$rootScope, Cards){
+.controller('TableGameCtrl',function($scope,$state,$rootScope, Cards, Game, $ionicPopup, $timeout){
   
     //$rootScope.user=$rootScope.user;
     $scope.cards = Cards.all();
-});
+    $scope.players = $rootScope.players;
+    
+    $scope.choosePlayer=function(){        
 
+        var listPopup = $ionicPopup.show({
+         template: '<ion-list>                                '+
+                   '  <ion-item ng-repeat="player in players"> '+
+                   '    {{player.name}}                              '+
+                   '  </ion-item>                             '+
+                   '</ion-list>                               ',
+         
+         title: 'Which player ?',
+         scope: $scope,
+         buttons: [
+           { text: 'Cancel' },
+         ]
+        }); 
+    }
+});
