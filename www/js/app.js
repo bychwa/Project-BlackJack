@@ -61,6 +61,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     url: '/table',
     templateUrl: 'templates/table.html',
     controller: 'TableGameCtrl'
+  })
+
+  .state('all-views', {
+    url: '/all-views',
+    templateUrl: 'templates/all-views.html',
+    controller: 'AllViewsCtrl'
   });
 
   $urlRouterProvider.otherwise('/home-usertype');

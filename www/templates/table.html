@@ -6,5 +6,26 @@
           	<h2 class="text-center" style="color:white;">Table</h2>
         </div>
     </div>
+    <ion-side-menus>
+          <ion-side-menu-content>
+            <!-- <ion-header-bar class="bar-positive"> -->
+            <!-- <h1 class="title"> Home Header </h1> -->
+              <div class="buttons">
+                <button class="button icon button-light ion-navicon-round" menu-toggle="left" ng-click="toggleLeft()"></button>
+              </div>
+            <!-- </ion-header-bar> -->
+          </ion-side-menu-content>
+          <ion-side-menu side="left">
+            <ion-list>
+              <ion-item>Photos</ion-item>
+            </ion-list>
+            <ion-list>
+              <ion-item>Videos</ion-item>
+            </ion-list>
+            <ion-list>
+              <ion-item>Options</ion-item>
+            </ion-list>
+          </ion-side-menu>
+        </ion-side-menus>
   </ion-content>
 </ion-view>

@@ -14,6 +14,9 @@ angular.module('starter.controllers', ['ngCordova',])
           $state.go('home-username');
         }
     }
+    $scope.go_to_debugView=function(){
+        $state.go('all-views');
+    }
   })
 
 .controller('UsernameCtrl', function($scope,$rootScope, $state) {
@@ -25,8 +28,6 @@ angular.module('starter.controllers', ['ngCordova',])
         $rootScope.user=user;        
         $state.go('home-acceptinvitation');
     }
-
-   
 
 })
 .controller('MasterGameCtrl', function($scope,$rootScope,$state,$interval,Game) {
@@ -144,5 +145,13 @@ angular.module('starter.controllers', ['ngCordova',])
   
     //$rootScope.user=$rootScope.user;
     $scope.cards = Cards.all();
-});
+})
 
+
+.controller('AllViewsCtrl', function($scope,$rootScope, $state) {
+    $scope.views = ["Home-AcceptInvitation", "Home-InviteUsers", "Home-Username", "Home-Usertype",
+                    "Player-Hand", "Player-Waiting", "Table"];
+    $scope.get_views=function(){
+      return 0;
+    };
+});
