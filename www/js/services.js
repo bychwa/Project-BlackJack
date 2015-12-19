@@ -71,22 +71,22 @@ angular.module('starter.services', [])
   // Some fake testing data
   var cards = [{
     id: 0,
-    image: 'img/jack_of_diamonds2.png'
+    image: 'img/jack_of_diamonds2.svg'
   }, {
     id: 1,
-    image: 'img/jack_of_clubs2.png'
+    image: 'img/jack_of_clubs2.svg'
   }, {
     id: 2,
-    image: 'img/4_of_clubs.png'
+    image: 'img/4_of_clubs.svg'
   }, {
     id: 3,
-    image: 'img/3_of_diamonds.png'
+    image: 'img/3_of_diamonds.svg'
   }, {
     id: 4,
-    image: 'img/queen_of_hearts2.png'
+    image: 'img/queen_of_hearts2.svg'
   }, {
     id: 5,
-    image: 'img/jack_of_hearts2.png'
+    image: 'img/jack_of_hearts2.svg'
   }];
 
 
