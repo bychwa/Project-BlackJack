@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.services','ionic.contrib.ui.cards'])
+angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform,$cordovaStatusbar) {
 
@@ -56,13 +56,17 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     templateUrl: 'templates/player-hand.html',
     controller: 'PlayerHandGameCtrl'
   })
-
+  .state('game-table', {
+    url: '/game-table',
+    templateUrl: 'templates/game-table.html',
+    controller: 'GameTableCtrl'
+  })
   .state('table', {
     url: '/table',
     templateUrl: 'templates/table.html',
     controller: 'TableGameCtrl'
   });
 
-  $urlRouterProvider.otherwise('/player-hand');
+  $urlRouterProvider.otherwise('/game-table');
 
 });

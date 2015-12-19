@@ -120,7 +120,11 @@ button{
 
 }
 
-
-
+draggable-image { 
+    position:  absolute;
+    left: 0;
+    top: 0; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+    
+}
 
 
