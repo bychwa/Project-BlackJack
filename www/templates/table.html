@@ -3,12 +3,12 @@
   		<div class="container">
 		    <div class="row row-center left1">
 		    	<div class="col">
-		    		<img class="padding col center_card" on-double-tap="choosePlayer()" src="img/red_joker.png">
+		    		<img class="padding col" on-double-tap="choosePlayer()" src="img/red_joker.png">
 		    	</div>
 		    	<div class="col">
 		    		<div class="button-bar bar-dark action_buttons" >
-					  <a class="button">Shuffle</a>
-					  <a class="button">Distribute</a>
+					  <a class="button" ng-click="shuffle()">Shuffle</a>
+					  <a class="button" ng-click="distribute()">Distribute</a>
 					</div>
 		    	</div>
 			</div>
@@ -16,7 +16,7 @@
 		
 		<div class="row div_footer">
 	  		<ion-scroll direction="x">
-				<img class="box {{ is_selected(card) }}" ng-repeat="card in cards" ng-click="select_card(card)" src="{{ card.image }}">
+				<img class="box" ng-repeat="card in cards" src="{{ card.image }}">
 			</ion-scroll>
 		</div>
     	

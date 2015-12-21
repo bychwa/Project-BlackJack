@@ -161,7 +161,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
         var listPopup = $ionicPopup.show({
          template: '<ion-list>                                '+
-                   '  <ion-item ng-repeat="player in players"> '+
+                   '  <ion-item ng-repeat="player in players" ng-click="giveCard(player)"> '+
                    '    {{player.name}}                              '+
                    '  </ion-item>                             '+
                    '</ion-list>                               ',
@@ -173,4 +173,23 @@ angular.module('starter.controllers', ['ngCordova'])
          ]
         }); 
     }
+
+    $scope.giveCard=function(player){        
+
+        // implementation backend give card
+        console.log("give card to " + player.name);
+    }
+
+    $scope.shuffle=function(){        
+
+        // implementation backend give card
+        console.log("shuffle");
+    }
+
+    $scope.distribute=function(){        
+
+        // implementation backend give card
+        console.log("distribute");
+    }
+    
 });
