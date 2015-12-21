@@ -1,7 +1,7 @@
 <ion-view >
   <ion-content scroll="false" zooming="true" class="padding">
     
-    <div id="player_menu" class="hidden"><button>Serve</button><button ng-click="menu_click_event('player','game_menu')">Game Menu</button><button ng-click="menu_click_event('player','exit')">Exit</button></div>
+    <div id="player_menu" class="hidden"><button ng-click="serve_card()">Serve</button><button ng-click="menu_click_event('player','game_menu')">Game Menu</button><button ng-click="menu_click_event('player','exit')">Exit</button></div>
 
     <div id="game_menu"><button ng-click="shuffle_cards()">Shuffle</button><button ng-click="distribute_cards()">Distribute</button><button>By suit</button><button>Fan</button><button ng-click="menu_click_event('game','card_menu')">Card Menu</button><button ng-click="menu_click_event('game','exit')">Exit</button></div>
 
@@ -15,14 +15,6 @@
   		</div>
   	</div> -->
 
-    <!-- <div id="usersbar" style="text-align:center;">
-    	<img class="avatar" width="80px" height="80px" src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg"/>
-    	<img class="avatar" width="80px" height="80px" src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg"/>
-    	<img class="avatar" width="80px" height="80px" src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg"/>
-    	<img class="avatar" width="80px" height="80px" src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg"/>
-    	<img class="avatar" width="80px" height="80px" src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg"/>
-    	<img class="avatar" width="80px" height="80px" src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg"/>
-    </div> -->
     
     <div id="container"></div>
     

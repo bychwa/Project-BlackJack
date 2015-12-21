@@ -191,7 +191,35 @@ angular.module('starter.controllers', ['ngCordova',])
         $scope.deck.shuffle();
         
     }
+    $scope.serve_card=function(){
 
+          var distributePopup = $ionicPopup.show({
+                                  template: '<div id="usersbar" style="text-align:center;"><img class="user-avatar" width="80px" height="80px" src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg"/></div>',
+                                  title: 'Enter Distribution number!',
+                                  subTitle: 'Please enter 0 if you dont want to distribute!',
+                                  scope:$scope,
+                                  buttons: [
+                                    {
+                                      text: '<b>Serve</b>',
+                                      type: 'button-positive',
+                                      onTap: function(e) {
+                                        // if (!$scope.Settings.distribution_no) {
+                                          e.preventDefault();
+                                        // } else {
+                                        //   return $scope.Settings.distribution_no;
+                                        // }
+                                      }
+                                    }
+                                  ]
+                                });
+
+        distributePopup.then(function(res) {
+            
+              console.log(res);  
+
+        });
+
+    }
     $scope.distribute_cards=function(){
         var distributePopup = $ionicPopup.show({
                                   template: '<input type="number" ng-model="Settings.distribution_no"/>',
@@ -201,7 +229,7 @@ angular.module('starter.controllers', ['ngCordova',])
                                   buttons: [
                                     { text: 'Cancel' },
                                     {
-                                      text: '<b>Shuffle</b>',
+                                      text: '<b>Distribute</b>',
                                       type: 'button-positive',
                                       onTap: function(e) {
                                         if (!$scope.Settings.distribution_no) {
