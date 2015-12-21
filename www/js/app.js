@@ -65,6 +65,12 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     url: '/table',
     templateUrl: 'templates/table.html',
     controller: 'TableGameCtrl'
+  })
+
+  .state('all-views', {
+    url: '/all-views',
+    templateUrl: 'templates/all-views.html',
+    controller: 'AllViewsCtrl'
   });
 
   $urlRouterProvider.otherwise('/game-table');
