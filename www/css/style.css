@@ -1,3 +1,6 @@
+.hidden {
+    visibility: hidden;
+}
 
 /* header */
 .bar.bar-stable {
@@ -118,6 +121,13 @@ button{
     left: 0px;
     right: 0px;
 
+}
+
+draggable-image { 
+    position:  absolute;
+    left: 0;
+    top: 0; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+    
 }
 
 
