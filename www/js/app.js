@@ -56,13 +56,23 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     templateUrl: 'templates/player-hand.html',
     controller: 'PlayerHandGameCtrl'
   })
-
+  .state('game-table', {
+    url: '/game-table',
+    templateUrl: 'templates/game-table.html',
+    controller: 'GameTableCtrl'
+  })
   .state('table', {
     url: '/table',
     templateUrl: 'templates/table.html',
     controller: 'TableGameCtrl'
+  })
+
+  .state('all-views', {
+    url: '/all-views',
+    templateUrl: 'templates/all-views.html',
+    controller: 'AllViewsCtrl'
   });
 
-  $urlRouterProvider.otherwise('/home-usertype');
+  $urlRouterProvider.otherwise('/game-table');
 
 });

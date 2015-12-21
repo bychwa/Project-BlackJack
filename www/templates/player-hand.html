@@ -3,7 +3,7 @@
   		
   		<div class="container">
 		    <div class="row row-center left1">
-				<img class="padding col center_card" width="12px" height="12px" on-double-tap="toogleCardAction()" src="{{ selected_card }}">
+				<img class="padding col center_card {{ center_card_class }}" on-swipe-up="onSwipeUp()" width="12px" height="12px" on-double-tap="toogleCardAction()" ng-src="{{ selected_card }}">
 
 			</div>
 		</div>
@@ -15,9 +15,6 @@
 			  <a class="button">hide</a>
 			</div>
 		</div>
-
-  		
-
 		
 		<div class="row div_footer">
 	  		<ion-scroll direction="x">

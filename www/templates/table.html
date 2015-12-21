@@ -1,6 +1,13 @@
 <ion-view view-title="Table">
   <ion-content scroll="false" class="padding">
-  		<div class="container">
+    <div class="row row-center">
+        <div class="col list text-center">
+          	<h2 class="text-center" style="color:white;">Table</h2>
+        </div>
+    </div>
+
+	<!-- clement
+		<div class="container">
 		    <div class="row row-center left1">
 		    	<div class="col">
 		    		<img class="padding col" on-double-tap="choosePlayer()" src="img/red_joker.png">
@@ -18,7 +25,28 @@
 	  		<ion-scroll direction="x">
 				<img class="box" ng-repeat="card in cards" src="{{ card.image }}">
 			</ion-scroll>
-		</div>
-    	
+		</div>-->
+
+    <ion-side-menus>
+          <ion-side-menu-content>
+            <!-- <ion-header-bar class="bar-positive"> -->
+            <!-- <h1 class="title"> Home Header </h1> -->
+              <div class="buttons">
+                <button class="button icon button-light ion-navicon-round" menu-toggle="left" ng-click="toggleLeft()"></button>
+              </div>
+            <!-- </ion-header-bar> -->
+          </ion-side-menu-content>
+          <ion-side-menu side="left">
+            <ion-list>
+              <ion-item>Start Game</ion-item>
+            </ion-list>
+            <ion-list>
+              <ion-item>Options</ion-item>
+            </ion-list>
+            <ion-list>
+              <ion-item>Quit</ion-item>
+            </ion-list>
+          </ion-side-menu>
+        </ion-side-menus>
   </ion-content>
 </ion-view>
