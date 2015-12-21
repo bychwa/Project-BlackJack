@@ -1,3 +1,6 @@
+.hidden {
+    visibility: hidden;
+}
 
 /* header */
 .bar.bar-stable {

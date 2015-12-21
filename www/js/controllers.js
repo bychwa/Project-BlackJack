@@ -177,75 +177,176 @@ angular.module('starter.controllers', ['ngCordova',])
 
 })
 
-.controller('GameTableCtrl',function($scope,$state,$rootScope,Cards, Game, $ionicPopup, $timeout){
+.controller('GameTableCtrl',function($scope,$state,$rootScope,Cards, Game,$q, $ionicPopup, $timeout){
     
+    $scope.Settings = {};
+        
     $scope.toogle_card_action=false;
 
-    $scope.card_ontouch_event=function(card){
-      alert(card.className);
-      //$scope.card_ontouch_event(this);
-
-    }
-    // easter eggs start
-
+    $scope.shuffle_cards=function(){
         
+        $scope.deck.shuffle();
+        $scope.deck.shuffle();
+        $scope.deck.shuffle();
+        $scope.deck.shuffle();
+        
+    }
 
-    $scope.startWinning=function  () {
-        var $winningDeck = document.createElement('div')
-        $winningDeck.classList.add('deck')
-        $winningDeck.style[transform] = translate(Math.random() * window.innerWidth - window.innerWidth / 2 + 'px', Math.random() * window.innerHeight - window.innerHeight / 2 + 'px')
-        $container.appendChild($winningDeck)
+    $scope.distribute_cards=function(){
+        var distributePopup = $ionicPopup.show({
+                                  template: '<input type="number" ng-model="Settings.distribution_no"/>',
+                                  title: 'Enter Distribution number!',
+                                  subTitle: 'Please enter 0 if you dont want to distribute!',
+                                  scope:$scope,
+                                  buttons: [
+                                    { text: 'Cancel' },
+                                    {
+                                      text: '<b>Shuffle</b>',
+                                      type: 'button-positive',
+                                      onTap: function(e) {
+                                        if (!$scope.Settings.distribution_no) {
+                                          e.preventDefault();
+                                        } else {
+                                          return $scope.Settings.distribution_no;
+                                        }
+                                      }
+                                    }
+                                  ]
+                                });
 
-        var side = Math.floor(Math.random() * 2) ? 'front' : 'back'
+        distributePopup.then(function(res) {
+            
+              console.log(res);  
 
-        for (var i = 0; i < 55; i++) {
-            $scope.addWinningCard($winningDeck, i, side)
+        });
+            
+    }
+
+    $scope.card_ontouch_event=function(card){
+        alert(card.className);
+    }
+
+    $scope.menu_click_event=function(menu,button){
+        switch(menu){
+          case 'player':
+                switch(button){
+                  case 'game_menu':
+                        $scope.togle_visibility("player_menu","hide");    
+                        $scope.togle_visibility("game_menu","show");    
+                        console.log(button);
+                      break;
+                  case 'exit':
+                        $scope.togle_visibility("game_menu","hide");
+                        $scope.togle_visibility("player_menu","hide");    
+                        console.log(button);
+                      break;
+                  default:
+
+                    break;   
+                }
+              break;
+          case 'game':
+               switch(button){
+                  case 'exit':
+                        $scope.togle_visibility("game_menu","hide");
+                        $scope.togle_visibility("player_menu","hide");    
+                        console.log(button);
+                      break;
+                  case 'card_menu':  
+                        $scope.togle_visibility("game_menu","hide");    
+                        $scope.togle_visibility("player_menu","show");    
+                      break;  
+                  default:
+
+                    break;   
+                }
+              break;     
+
+          default:
+            break;    
+        }   
+    }
+    // $scope.startWinning=function  () {
+    //     var $winningDeck = document.createElement('div')
+    //     $winningDeck.classList.add('deck')
+    //     $winningDeck.style[transform] = translate(Math.random() * window.innerWidth - window.innerWidth / 2 + 'px', Math.random() * window.innerHeight - window.innerHeight / 2 + 'px')
+    //     $container.appendChild($winningDeck)
+    //     var side = Math.floor(Math.random() * 2) ? 'front' : 'back'
+    //     for (var i = 0; i < 55; i++) {
+    //         $scope.addWinningCard($winningDeck, i, side)
+    //     }
+    //     setTimeout($scope.startWinning, Math.round(Math.random() * 1000))
+    // }
+
+    // $scope.addWinningCard=function ($deck, i, side) {
+    //   var card = Deck.Card(54 - i)
+    //   var delay = (55 - i) * 20
+    //   var animationFrames = Deck.animationFrames
+    //   var ease = Deck.ease
+
+    //   card.enableFlipping()
+
+    //   if (side === 'front') {
+    //     card.setSide('front')
+    //   } else {
+    //     card.setSide('back')
+    //   }
+
+    //   card.mount($deck)
+    //   card.$el.style.display = 'none'
+
+    //   var xStart = 0
+    //   var yStart = 0
+    //   var xDiff = -500
+    //   var yDiff = 500
+
+    //   animationFrames(delay, 1000)
+    //     .start(function () {
+    //       card.x = 0
+    //       card.y = 0
+    //       card.$el.style.display = ''
+    //     })
+    //     .progress(function (t) {
+    //       var tx = t
+    //       var ty = ease.cubicIn(t)
+    //       card.x = xStart + xDiff * tx
+    //       card.y = yStart + yDiff * ty
+    //       card.$el.style[transform] = translate(card.x + 'px', card.y + 'px')
+    //     })
+    //     .end(function () {
+    //       card.unmount()
+    //     })
+    // }
+
+    $scope.togle_visibility=function(item,property){
+        var x = document.getElementById(item).className;
+         
+        if(property=="hide"){
+            if(x.indexOf("hidden") > -1){
+              //document.getElementById(item).className -=" hidden";
+            }else{
+              document.getElementById(item).className +=" hidden";
+            }
+        }else{
+          if(x.indexOf("hidden") > -1){
+            document.getElementById(item).className -=" hidden";
+          }else{
+            //document.getElementById(item).className +=" hidden";
+          }
         }
-
-        setTimeout($scope.startWinning, Math.round(Math.random() * 1000))
     }
 
-    $scope.addWinningCard=function ($deck, i, side) {
-      var card = Deck.Card(54 - i)
-      var delay = (55 - i) * 20
-      var animationFrames = Deck.animationFrames
-      var ease = Deck.ease
-
-      card.enableFlipping()
-
-      if (side === 'front') {
-        card.setSide('front')
-      } else {
-        card.setSide('back')
-      }
-
-      card.mount($deck)
-      card.$el.style.display = 'none'
-
-      var xStart = 0
-      var yStart = 0
-      var xDiff = -500
-      var yDiff = 500
-
-      animationFrames(delay, 1000)
-        .start(function () {
-          card.x = 0
-          card.y = 0
-          card.$el.style.display = ''
-        })
-        .progress(function (t) {
-          var tx = t
-          var ty = ease.cubicIn(t)
-          card.x = xStart + xDiff * tx
-          card.y = yStart + yDiff * ty
-          card.$el.style[transform] = translate(card.x + 'px', card.y + 'px')
-        })
-        .end(function () {
-          card.unmount()
-        })
+    $scope.card_pressed=function(card){
+//        $scope.toogle_card_action = !$scope.toogle_card_action;
+        $scope.togle_visibility("player_menu","show");
+        $scope.togle_visibility("game_menu","hide");
+        console.log(x);
+        
     }
-    $scope.mouse_move=function(){
-      console.log("mouse move: ");
+    $scope.card_remove=function(card){
+        card.$el.className += " hidden";         
+        $scope.deck.cards.splice($scope.deck.cards.indexOf(card),1);
+            
     }
     $scope.game_play=function(){
         
@@ -256,28 +357,28 @@ angular.module('starter.controllers', ['ngCordova',])
           
           card.enableDragging()
           //card.enableFlipping()
-
-          card.$el.addEventListener('drag', onMouseMove);
           
-          function onMouseMove(){
-            console.log("mouse move");
-          }
-          //card.$el.addEventListener('touchstart', onTouch)
+          // card.$el.addEventListener('touchstart', onTouch)
+          // card.$el.addEventListener('doubletouch', onTouch)
           
           Hammer(card.$el).on("doubletap", onDoubleTap);
-          Hammer(card.$el).on("tap", onSingleTap);
-          
-          function onSingleTap(){
-            $scope.toogle_card_action=!$scope.toogle_card_action;
-            console.log("card tapped: "+card.i);
+          Hammer(card.$el).on("press", onPress);
+
+          function onPress(){
+            $scope.card_pressed(card);
 
           }
+
           function onDoubleTap(){
+
+            card.setSide(card.side=="front" ? "back":"front");
+
+            //console.log("card double tapped"+$scope.deck.cards.length);
+            console.log("card double tapped " + card.$el.className);  
             
-            card.setSide(card.side=="front"? "back":"front");
-            //console.log("card "+$scope.deck.cards.length);
-            // $scope.deck.cards.splice($scope.deck.cards.indexOf(card),1);
-            //console.log("card "+$scope.deck.cards.length);
+            //card.$el.className +=" hidden";         
+            //$scope.deck.cards.splice($scope.deck.cards.indexOf(card),1);
+            
 
           }
           function onTouch () {
@@ -322,20 +423,19 @@ angular.module('starter.controllers', ['ngCordova',])
               }
             }
           }
-        })
+        });
+      
     }
-
+    
     $scope.initializeGame=function(){
         
         var prefix = Deck.prefix
-
         var transform = prefix('transform')
-
         var translate = Deck.translate
 
         var $container = document.getElementById('container')
-        var $topbar = document.getElementById('topbar')
-        var $usersbar = document.getElementById('usersbar');
+        //var $topbar = document.getElementById('topbar')
+        //var $usersbar = document.getElementById('usersbar');
 
         var $sort = document.createElement('button') 
         var $shuffle = document.createElement('button')
@@ -348,10 +448,11 @@ angular.module('starter.controllers', ['ngCordova',])
         var $user2 = document.createElement('img'); $user2.className += 'user-avatar'; $user2.src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg";
         
         // $user2.addEventListener('dragover', function () {
-        //   alert(12);
+        //     alert(12);
         // })
-        $usersbar.appendChild($user);
-        $usersbar.appendChild($user2);
+
+        //$usersbar.appendChild($user);
+        //$usersbar.appendChild($user2);
                           
 
         $shuffle.textContent = 'Shuffle'
@@ -361,17 +462,16 @@ angular.module('starter.controllers', ['ngCordova',])
         $poker.textContent = 'Poker'
         $flip.textContent = 'Flip'
 
-        $topbar.appendChild($flip)
-        $topbar.appendChild($shuffle)
-        $topbar.appendChild($bysuit)
-        $topbar.appendChild($fan)
-        $topbar.appendChild($poker)
-        $topbar.appendChild($sort)
+        // $topbar.appendChild($flip)
+        // $topbar.appendChild($shuffle)
+        // $topbar.appendChild($bysuit)
+        // $topbar.appendChild($fan)
+        // $topbar.appendChild($poker)
+        // $topbar.appendChild($sort)
 
         $scope.deck = Deck()
 
         $shuffle.addEventListener('click', function () {
-          
           $scope.deck.shuffle()
           $scope.deck.shuffle()
 
@@ -407,16 +507,17 @@ angular.module('starter.controllers', ['ngCordova',])
 
         $scope.deck.mount($container)
 
-        //deck.intro()
+        // deck.intro()
         // deck.sort()
 
         $scope.game_play();
 
     }
     
-
     $scope.start_game=function(){
-         $scope.initializeGame();
+        $scope.initializeGame();
+                                      
+        
     }
 
     $scope.start_game();
