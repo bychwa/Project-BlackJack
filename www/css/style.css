@@ -50,7 +50,7 @@ button{
 .center_card{
   width:20%;
   height:20%;
-    
+   
 }
 
 .div_action_buttons{
@@ -108,6 +108,9 @@ button{
 
 }
 
+.bj_card.diamonds.rank2 .face {
+  background-image: url("../faces/3_2.svg");
+}
 
 .card_selected{
     

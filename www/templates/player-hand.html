@@ -1,10 +1,8 @@
 <ion-view view-title="{{ user.name }}">
   <ion-content scroll="false" class="padding">
-  		
-  		<div class="container">
-		    <div class="row row-center left1">
-				<img class="padding col center_card {{ center_card_class }}" on-swipe-up="onSwipeUp()" width="12px" height="12px" on-double-tap="toogleCardAction()" ng-src="{{ selected_card }}">
-
+		<div class="container">
+  			<div class="row row-center left1">
+		    	<img class="padding col center_card {{ center_card_class }}" on-swipe-up="onSwipeUp()" min-width="12px" height="12px" on-double-tap="toogleCardAction()" ng-src="{{ selected_card }}">
 			</div>
 		</div>
 
@@ -18,7 +16,7 @@
 		
 		<div class="row div_footer">
 	  		<ion-scroll direction="x">
-				<img class="box {{ is_selected(card) }}" ng-repeat="card in cards" ng-click="select_card(card)" src="{{ card.image }}">
+				<img class="box {{ is_selected() }}" ng-repeat="card in playercards" ng-click="select_card(card_maping(card.card))" src="{{ card_maping(card.card).image }}">
 			</ion-scroll>
 		</div>
     	
