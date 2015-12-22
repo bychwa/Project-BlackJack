@@ -39,13 +39,12 @@ angular.module('starter.controllers', ['ngCordova',])
 })
 .controller('MasterGameCtrl', function($scope,$rootScope,$state,$interval,Game) {
  
-  $rootScope.user=$rootScope.user;
+  $scope.user=$rootScope.user;
   $scope.players=[];
   //$rootScope.players=$scope.players;
   $scope.get_players=function(){
       Game.players($scope.game_code).then(function(data){
         $scope.players=data; 
-        console.log(data);
         $rootScope.players=$scope.players;
       });
   }
@@ -53,7 +52,11 @@ angular.module('starter.controllers', ['ngCordova',])
     
     console.log('start the game');
     Game.start_game($scope.game_code).then(function(data){
+        
+        $rootScope.game_code=$scope.game_code;
+
         console.log('game started!');
+        
         $state.go('game-table');
     
     });
@@ -63,7 +66,7 @@ angular.module('starter.controllers', ['ngCordova',])
 
   Game.new().then(function(game_code){
       $scope.game_code=game_code;
-      $scope.rootScope=game_code;
+      $rootScope.game_code=game_code;
       $scope.game_url="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chl="+game_code+"&chld=H|0";
   });
   
@@ -80,7 +83,7 @@ angular.module('starter.controllers', ['ngCordova',])
 })
 .controller('PlayerJoinGameCtrl',function($scope,$state,$rootScope,$ionicPopup,$cordovaBarcodeScanner,Game){
   
-    $rootScope.user=$rootScope.user;
+    $scope.user=$rootScope.user;
   
     $scope.scanBarcode = function() {
           $cordovaBarcodeScanner.scan().then(function(imageData) {
@@ -90,8 +93,8 @@ angular.module('starter.controllers', ['ngCordova',])
               if($scope.scan_data.length > 10){
               
                   Game.join($scope.scan_data,$scope.user_data).then(function(data){
-                    $rootScope.game_code = $scope.scan_data;
-                    $state.go('player-waiting');
+                      $rootScope.game_code = $scope.scan_data;
+                      $state.go('player-waiting');
                   });
               
               }else{
@@ -129,7 +132,9 @@ angular.module('starter.controllers', ['ngCordova',])
 
         Game.wait_game_start($scope.game_code).then(function(data){
             if(data==1){
+                
                 $state.go("player-hand");
+
             }            
         });
 
@@ -146,14 +151,18 @@ angular.module('starter.controllers', ['ngCordova',])
 
 })
 
-.controller('PlayerHandGameCtrl',function($scope,$state,$rootScope, Cards){
-  
-    $rootScope.user=$rootScope.user;
-    $scope.cards = Cards.all();
+.controller('PlayerHandGameCtrl',function($scope,$state,$rootScope,Cards,Game,$interval){
+
+    $scope.user = $rootScope.user;
+    $scope.game_code = $rootScope.game_code;
+    
+    // $scope.cards = Cards.all();
+
     $scope.selected_card="";
     $scope.toogle_card_action=false;
 
     $scope.center_card_class="";
+
     $scope.toogleCardAction=function(){
       $scope.toogle_card_action=!$scope.toogle_card_action;
     }
@@ -174,15 +183,43 @@ angular.module('starter.controllers', ['ngCordova',])
       $scope.center_card_class="slide-in";
     
       //alert("up");
+
     }
+
+    $scope.card_maping=function(card){
+        return Cards.map(card);
+    }
+    $scope.fetch_cards=function(){
+        
+        Game.fetch_cards($scope.game_code,$scope.user.name).then(function(data){
+            $scope.playercards=data;            
+        });
+    }
+    var promise = $interval($scope.fetch_cards, 2000);
+    
+    // Cancel interval on page changes
+    $scope.$on('$destroy', function(){
+        if (angular.isDefined(promise)) {
+            $interval.cancel(promise);
+            promise = undefined;
+        }
+    });
 
 })
 
-.controller('GameTableCtrl',function($scope,$state,$rootScope,Cards, Game,$q, $ionicPopup, $timeout){
+.controller('GameTableCtrl',function($scope,$state,$rootScope, Cards, Game,$q, $ionicPopup, $timeout){
     
+    $scope.game_code =$rootScope.game_code;
+    console.log("game code: "+$scope.game_code);
+
     $scope.Settings = {};
-        
+    $scope.players = $rootScope.players; 
+    
+    // console.log($rootScope.players);
+
     $scope.toogle_card_action=false;
+    
+    $scope.pressed_card=null;
 
     $scope.shuffle_cards=function(){
         
@@ -192,29 +229,28 @@ angular.module('starter.controllers', ['ngCordova',])
         $scope.deck.shuffle();
         
     }
+    $scope.close_popup=function(popup){
+        popup.close();
+    }
+    $scope.serve_a_player=function(player,popup){
+      
+      alert("player "+player.name+" served a card "+$scope.pressed_card.i);
+      
+      $scope.togle_visibility("game_menu","hide");
+      $scope.togle_visibility("player_menu","hide");    
+      popup.close();
+
+    }
+
     $scope.serve_card=function(){
 
-          var distributePopup = $ionicPopup.show({
-                                  template: '<div id="usersbar" style="text-align:center;"><img class="user-avatar" width="80px" height="80px" src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg"/></div>',
-                                  title: 'Enter Distribution number!',
-                                  subTitle: 'Please enter 0 if you dont want to distribute!',
+        $scope.serveCardPopup = $ionicPopup.show({
+                                  title:"Pick a Player to serve!",  
+                                  template:'<div style="text-align:center;" ng-if="!players">--No Players!--</div><a class="button button-bar button-primary" style="text-align:center;" ng-if="!players" ng-click="close_popup(serveCardPopup)"> close </a><div class="list"><a ng-repeat="player in players" class="item" style="text-align:center;" ng-click="serve_a_player(player,distributePopup)" href="#"> {{ player.name }} </a></div>',
                                   scope:$scope,
-                                  buttons: [
-                                    {
-                                      text: '<b>Serve</b>',
-                                      type: 'button-positive',
-                                      onTap: function(e) {
-                                        // if (!$scope.Settings.distribution_no) {
-                                          e.preventDefault();
-                                        // } else {
-                                        //   return $scope.Settings.distribution_no;
-                                        // }
-                                      }
-                                    }
-                                  ]
                                 });
 
-        distributePopup.then(function(res) {
+        $scope.serveCardPopup.then(function(res) {
             
               console.log(res);  
 
@@ -244,15 +280,31 @@ angular.module('starter.controllers', ['ngCordova',])
                                 });
 
         distributePopup.then(function(res) {
-            
-              console.log(res);  
+              
+              var distribution_no=res;
+              
+              if($scope.deck.cards.length < (distribution_no * $scope.players.length)){
+                  alert("Your distribution is more than the posiblity! Try again with fewer distribution number!");
 
+              }else{
+
+                    var cards=[];
+                    for (var i=0; i < $scope.players.length; i++) {
+                        for (var j=0; j < distribution_no; j++) {
+                              cards.push([$scope.game_code,$scope.players[i].name,$scope.deck.cards[0].i]);
+                              $scope.card_remove($scope.deck.cards[0]);
+                            
+                        };    
+                    };
+                    Game.distribute(cards).then(function(data){
+                          console.log(data);
+                    }); 
+
+
+              }
+             
         });
             
-    }
-
-    $scope.card_ontouch_event=function(card){
-        alert(card.className);
     }
 
     $scope.menu_click_event=function(menu,button){
@@ -295,6 +347,7 @@ angular.module('starter.controllers', ['ngCordova',])
             break;    
         }   
     }
+
     // $scope.startWinning=function  () {
     //     var $winningDeck = document.createElement('div')
     //     $winningDeck.classList.add('deck')
@@ -351,26 +404,24 @@ angular.module('starter.controllers', ['ngCordova',])
         var x = document.getElementById(item).className;
          
         if(property=="hide"){
-            if(x.indexOf("hidden") > -1){
-              //document.getElementById(item).className -=" hidden";
-            }else{
+            if(x.indexOf("hidden") <= -1){
               document.getElementById(item).className +=" hidden";
             }
         }else{
           if(x.indexOf("hidden") > -1){
             document.getElementById(item).className -=" hidden";
-          }else{
-            //document.getElementById(item).className +=" hidden";
           }
         }
     }
 
+    $scope.card_doubletapped=function(card){
+        $scope.doubletapped_card=card;
+        card.setSide(card.side=="front" ? "back":"front");
+    }
     $scope.card_pressed=function(card){
-//        $scope.toogle_card_action = !$scope.toogle_card_action;
+        $scope.pressed_card=card;
         $scope.togle_visibility("player_menu","show");
         $scope.togle_visibility("game_menu","hide");
-        console.log(x);
-        
     }
     $scope.card_remove=function(card){
         card.$el.className += " hidden";         
@@ -387,72 +438,60 @@ angular.module('starter.controllers', ['ngCordova',])
           card.enableDragging()
           //card.enableFlipping()
           
-          // card.$el.addEventListener('touchstart', onTouch)
-          // card.$el.addEventListener('doubletouch', onTouch)
-          
           Hammer(card.$el).on("doubletap", onDoubleTap);
           Hammer(card.$el).on("press", onPress);
 
           function onPress(){
-            $scope.card_pressed(card);
-
+             $scope.card_pressed(card);
           }
-
+          
           function onDoubleTap(){
-
-            card.setSide(card.side=="front" ? "back":"front");
-
-            //console.log("card double tapped"+$scope.deck.cards.length);
-            console.log("card double tapped " + card.$el.className);  
-            
-            //card.$el.className +=" hidden";         
-            //$scope.deck.cards.splice($scope.deck.cards.indexOf(card),1);
-            
-
+               $scope.card_doubletapped(card);
           }
+          
           function onTouch () {
             
-            var card
+                var card
 
-            if (i % 13 === 0) {
-              acesClicked[i] = true
-              if (acesClicked.filter(function (ace) {
-                return ace
-              }).length === 4) {
-                document.body.removeChild($topbar)
-                $scope.deck.$el.style.display = 'none'
-                setTimeout(function () {
-                  startWinning()
-                }, 250)
-              }
-            } else if (i % 13 === 12) {
-              if (!kingsClicked) {
-                return
-              }
-              kingsClicked[i] = true
-              if (kingsClicked.filter(function (king) {
-                return king
-              }).length === 4) {
-                for (var j = 0; j < 3; j++) {
-                  card = Deck.Card(52 + j)
-                  card.mount(deck.$el)
-                  card.$el.style[transform] = 'scale(0)'
-                  card.setSide('front')
-                  card.enableDragging()
-                  card.enableFlipping()
-                  $scope.deck.cards.push(card)
+                if (i % 13 === 0) {
+                  acesClicked[i] = true
+                  if (acesClicked.filter(function (ace) {
+                    return ace
+                  }).length === 4) {
+                    document.body.removeChild($topbar)
+                    $scope.deck.$el.style.display = 'none'
+                    setTimeout(function () {
+                      startWinning()
+                    }, 250)
+                  }
+                } else if (i % 13 === 12) {
+                  if (!kingsClicked) {
+                    return
+                  }
+                  kingsClicked[i] = true
+                  if (kingsClicked.filter(function (king) {
+                    return king
+                  }).length === 4) {
+                    for (var j = 0; j < 3; j++) {
+                      card = Deck.Card(52 + j)
+                      card.mount(deck.$el)
+                      card.$el.style[transform] = 'scale(0)'
+                      card.setSide('front')
+                      card.enableDragging()
+                      card.enableFlipping()
+                      $scope.deck.cards.push(card)
+                    }
+                    $scope.deck.sort(true)
+                    kingsClicked = false
+                  }
+                } else {
+                  acesClicked = []
+                  if (kingsClicked) {
+                    kingsClicked = []
+                  }
                 }
-                $scope.deck.sort(true)
-                kingsClicked = false
               }
-            } else {
-              acesClicked = []
-              if (kingsClicked) {
-                kingsClicked = []
-              }
-            }
-          }
-        });
+          });
       
     }
     
@@ -463,26 +502,13 @@ angular.module('starter.controllers', ['ngCordova',])
         var translate = Deck.translate
 
         var $container = document.getElementById('container')
-        //var $topbar = document.getElementById('topbar')
-        //var $usersbar = document.getElementById('usersbar');
-
+        
         var $sort = document.createElement('button') 
         var $shuffle = document.createElement('button')
         var $bysuit = document.createElement('button')
         var $fan = document.createElement('button')
         var $poker = document.createElement('button')
         var $flip = document.createElement('button')
-
-        var $user = document.createElement('img'); $user.className += 'user-avatar'; $user.src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg";
-        var $user2 = document.createElement('img'); $user2.className += 'user-avatar'; $user2.src="http://www.marketplace.co.tz/data/photos/1343467347_ns.jpg";
-        
-        // $user2.addEventListener('dragover', function () {
-        //     alert(12);
-        // })
-
-        //$usersbar.appendChild($user);
-        //$usersbar.appendChild($user2);
-                          
 
         $shuffle.textContent = 'Shuffle'
         $sort.textContent = 'Sort'
@@ -539,14 +565,12 @@ angular.module('starter.controllers', ['ngCordova',])
         // deck.intro()
         // deck.sort()
 
-        $scope.game_play();
+         $scope.game_play();
 
     }
     
     $scope.start_game=function(){
         $scope.initializeGame();
-                                      
-        
     }
 
     $scope.start_game();

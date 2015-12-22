@@ -73,6 +73,6 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     controller: 'AllViewsCtrl'
   });
 
-  $urlRouterProvider.otherwise('/game-table');
+  $urlRouterProvider.otherwise('/home-usertype');
 
 });

@@ -60,8 +60,31 @@ angular.module('starter.services', [])
                     function(error){
                         deferred.reject(error);
                     });
+
         return deferred.promise;
-      },  
+      },
+    distribute: function(cards) {
+        var deferred = $q.defer();
+            $http.get('http://api.bawalab.com/blackjack/distribute?cards='+JSON.stringify(cards)).then(
+                      function(data){
+                        deferred.resolve(data.data);
+                    },
+                    function(error){
+                        deferred.reject(error);
+                    });
+        return deferred.promise;
+      },
+    fetch_cards: function(code,player) {
+        var deferred = $q.defer();
+            $http.get('http://api.bawalab.com/blackjack/fetch_cards?player='+player+'&code='+code).then(
+                      function(data){
+                        deferred.resolve(data.data);
+                    },
+                    function(error){
+                        deferred.reject(error);
+                    });
+        return deferred.promise;
+      },      
   };
 })
 
@@ -71,22 +94,22 @@ angular.module('starter.services', [])
   // Some fake testing data
   var cards = [{
     id: 0,
-    image: 'img/jack_of_diamonds2.svg'
+    image: 'cards/jack_of_diamonds2.png'
   }, {
     id: 1,
-    image: 'img/jack_of_clubs2.svg'
+    image: 'cards/jack_of_clubs2.png'
   }, {
     id: 2,
-    image: 'img/4_of_clubs.svg'
+    image: 'cards/4_of_clubs.png'
   }, {
     id: 3,
-    image: 'img/3_of_diamonds.svg'
+    image: 'cards/3_of_diamonds.png'
   }, {
     id: 4,
-    image: 'img/queen_of_hearts2.svg'
+    image: 'cards/queen_of_hearts2.png'
   }, {
     id: 5,
-    image: 'img/jack_of_hearts2.svg'
+    image: 'cards/jack_of_hearts2.png'
   }];
 
 
@@ -94,6 +117,11 @@ angular.module('starter.services', [])
   return {
     all: function() {
       return cards;
+    },
+    map:function(number){
+      var bj_card=null;
+        //return cards[number];
+        return cards[number%5];
     }
   };
 });
