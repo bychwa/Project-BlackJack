@@ -64,14 +64,21 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
   .state('table', {
     url: '/table',
     templateUrl: 'templates/table.html',
-    controller: 'TableGameCtrl'
+    controller: 'TableCtrl'
   })
 
   .state('all-views', {
     url: '/all-views',
     templateUrl: 'templates/all-views.html',
     controller: 'AllViewsCtrl'
-  });
+  })
+  
+.state('options', {
+    cache: false,        
+    url: '/options',
+    templateUrl: 'templates/options.html',
+    controller: 'OptionsCtrl'
+});
 
   $urlRouterProvider.otherwise('/home-usertype');
 

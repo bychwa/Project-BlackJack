@@ -576,36 +576,70 @@ angular.module('starter.controllers', ['ngCordova',])
     $scope.start_game();
 
 })
-.controller('TableGameCtrl',function($scope,$state,$rootScope, Cards, Game, $ionicPopup, $timeout){
-  
-    //$rootScope.user=$rootScope.user;
-    $scope.cards = Cards.all();
-    $scope.players = $rootScope.players;
-    
-    $scope.choosePlayer=function(){        
-
-        var listPopup = $ionicPopup.show({
-         template: '<ion-list>                                '+
-                   '  <ion-item ng-repeat="player in players"> '+
-                   '    {{player.name}}                              '+
-                   '  </ion-item>                             '+
-                   '</ion-list>                               ',
-         
-         title: 'Which player ?',
-         scope: $scope,
-         buttons: [
-           { text: 'Cancel' },
-         ]
-        }); 
-    }
-
-})
-
 
 .controller('AllViewsCtrl', function($scope,$rootScope, $state) {
     $scope.views = ["Home-AcceptInvitation", "Home-InviteUsers", "Home-Username", "Home-Usertype",
-                    "Player-Hand", "Player-Waiting", "Table"];
+                    "Player-Hand", "Player-Waiting", "Table", "Game-Table", "Options"];
     $scope.get_views=function(){
       return 0;
     };
+})
+
+.controller('OptionsCtrl', function($scope,$rootScope, $state) {
+    // TODO: Add functions here
+
+    $rootScope.debug=function(stringToDebug){
+          console.log("OptionsCtrl called!");  
+          console.log("OptionsCtrl: " + stringToDebug); 
+    };
+    $scope.$on("$ionicView.beforeEnter", function() {
+        console.log("Options is entering!");  
+    });
+})
+
+.controller('TableCtrl', function($scope, $ionicModal) {
+    $ionicModal.fromTemplateUrl('templates/options.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal
+  })  
+
+  $scope.openModal = function() {
+    $scope.modal.show()
+  }
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+})
+
+.controller('ModalCtrl', function($scope, $ionicModal) {
+  $scope.contact = {
+    name: 'Mittens Cat',
+    info: 'Tap anywhere on the card to open the modal'
+  }
+
+  $ionicModal.fromTemplateUrl('contact-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal
+  })  
+
+  $scope.openModal = function() {
+    $scope.modal.show()
+  }
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
 });

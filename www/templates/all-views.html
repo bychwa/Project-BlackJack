@@ -2,15 +2,11 @@
   <ion-content scroll="true" class="padding text-center background">
     	
     	<div class="row row-center vertical_center">
-
-	        	<!-- <ion-header-bar class="bar-positive">
-	        		<button class="button button-round button-positive" ng-click="get_views()">Get Views</button>
-	        	</ion-header-bar> -->
 	       
 			<div class="col col-center list">
 		        <ion-list list-inset>
 		        	<ion-item ng-repeat="view in views"> 
-		        		<a href="#/{{view.toLowerCase()}}"> {{view}} </a>
+		        		<a ui-sref="{{view.toLowerCase()}}" class="item item-icon-left item-icon-right more-item"> {{view}} </a>
 		        	</ion-item>
 		        </ion-list>
 	        </div>
