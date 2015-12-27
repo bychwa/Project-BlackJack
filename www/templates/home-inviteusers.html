@@ -5,8 +5,8 @@
             <img ng-src="{{ game_url }}" class="card padding ">
             <h4>Joined Players</h4>
             <p ng-if="players.length == 0 " style="color:white;">No one has joined yet!</p>
-            <h5 class="text-center" style="color:white;" ng-repeat="player in players">{{ player.name +" has joined!" }}</h5>  
-            <button class="button button-block button-negative" ng-disabled="players.length <=1 " ng-click="start_game()">
+            <h5 class="text-center" style="color:white;" ng-repeat="player in Game.players">{{ player.name +" has joined!" }}</h5>  
+            <button class="button button-block button-negative" ng-disabled="Game.players.length <=1 " ng-click="start_game()">
                     Start Game 
             </button>
         </div>

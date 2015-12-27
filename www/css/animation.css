@@ -20,7 +20,7 @@
 }
 
 
-.slide-in{
+.slide-out{
    -webkit-animation: slideInSmooth ease-in 1; 
   animation: slideInSmooth ease-in 1;
   -webkit-animation-fill-mode: forwards;

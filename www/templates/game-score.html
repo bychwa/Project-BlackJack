@@ -1,0 +1,33 @@
+<ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">Game Score Sheet!</h1>
+    </ion-header-bar>
+    <ion-content>
+      	<div class="card">
+  				<div class="row item text-center">
+				  <div class="col" style="color:black;"><b>Player</b></div>
+				  <div class="col"><b>Rnd 1</b></div>
+				  <div class="col"><b>Rnd 2</b></div>
+				  <div class="col"><b>Rnd 3</b></div>
+				  <div class="col"><b>Rnd 4</b></div>
+				  <div class="col"><b>Rnd 5</b></div>
+				</div><hr/>
+			    <div class="row item" ng-repeat="player in Game.players">
+				  <div class="col">{{ player.name }}</div>
+				  <div class="col item-input-inset"><label class="item-input-wrapper"><input type="text" ng-init="player.score.round_1=0" ng-model="player.score.round_1"></label></div>
+				  <div class="col item-input-inset"><label class="item-input-wrapper"><input type="text" ng-init="player.score.round_2=0" ng-model="player.score.round_2"></label></div>
+				  <div class="col item-input-inset"><label class="item-input-wrapper"><input type="text" ng-init="player.score.round_3=0" ng-model="player.score.round_3" placeholder="round 3"></label></div>
+				  <div class="col item-input-inset"><label class="item-input-wrapper"><input type="text" ng-init="player.score.round_4=0" ng-model="player.score.round_4" placeholder="round 4"></label></div>
+				  <div class="col item-input-inset"><label class="item-input-wrapper"><input type="text" ng-init="player.score.round_5=0" ng-model="player.score.round_5" placeholder="round 5"></label></div>
+				</div>
+		</div>
+		<div class="card text-center">
+			<h2 style="color:red;">Top Scorer!</h2>
+			<hr/>
+			<div class="row">
+				<div class="col text-center"><h3 style="color:red;">{{ top_scorer(Game.players).name }}</h3></div>
+				<div class="col text-center"><h3 style="color:red;">{{ top_scorer(Game.players).score }}</h3></div>
+			</div>
+		</div>
+    </ion-content>
+</ion-modal-view>

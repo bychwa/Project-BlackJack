@@ -62,6 +62,17 @@ body {
   background-color: #fff;
   color: #444;
 }
+#tabledeck{
+  position: fixed;
+  top: calc(50% + 1.5rem);
+  left: 60%;
+  -webkit-transform: translate3d(-60%, -60%, 0);
+  -moz-transform: translate3d(-60%, -60%, 0);
+  -o-transform: translate3d(-60%, -60%, 0);
+  -ms-transform: translate3d(-60%, -60%, 0);
+  transform: translate3d(-60%, -60%, 0);
+
+}
 
 #usersbar {
   position: fixed;

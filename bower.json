@@ -6,6 +6,7 @@
     "ngCordova": "~0.1.23-alpha"
   },
   "dependencies": {
-    "ionic-ion-swipe-cards": "*"
+    "ionic-ion-swipe-cards": "*",
+    "ionic-toast": "~0.2.0"
   }
 }

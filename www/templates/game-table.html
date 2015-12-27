@@ -1,22 +1,12 @@
 <ion-view >
   <ion-content scroll="false" zooming="true" class="padding">
-    {{ players }}
     <div id="player_menu" class="hidden"><button ng-click="serve_card()">Serve</button><button ng-click="menu_click_event('player','game_menu')">Game Menu</button><button ng-click="menu_click_event('player','exit')">Exit</button></div>
 
-    <div id="game_menu"><button ng-click="shuffle_cards()">Shuffle</button><button ng-click="distribute_cards()">Distribute</button><button>By suit</button><button>Fan</button><button ng-click="menu_click_event('game','card_menu')">Card Menu</button><button ng-click="menu_click_event('game','exit')">Exit</button></div>
-
+    <div id="game_menu"><button ng-click="shuffle_cards()">Shuffle</button><button ng-click="distribute_cards()">Distribute</button><button ng-click="deck.flip()">Flip Cards</button><button ng-click="deck.fan()">Fan</button><button ng-click="menu_click_event('game','card_menu')">Card Menu</button><button ng-click="menu_click_event('game','exit')">Exit</button></div>
+    <img ng-click="pause_game()" class="pause_btn" src="images/pause.ico">
     <div id="topbar"></div>
-
-    <!-- <div class="div_action_buttons" style="width:300px;" ng-show="toogle_card_action">
-    		<div class="button-bar bar-dark action_buttons" >
-  		  <a class="button">Play</a>
-  		  <a class="button">Drop</a>
-  		  <a class="button">hide</a>
-  		</div>
-  	</div> -->
-
-    
     <div id="container"></div>
+    <div id="tabledeck"></div>
     
   </ion-content>  
 </ion-view>

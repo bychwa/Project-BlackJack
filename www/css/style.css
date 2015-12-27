@@ -52,7 +52,17 @@ button{
   height:20%;
    
 }
-
+.pause_btn{
+  width: 70px;
+  height: 70px;
+  position: fixed;
+  top:5%;
+  right: 5%;
+}
+.pause_btn:hover{
+  border:5px solid white;
+  border-radius: 50px;
+}
 .div_action_buttons{
     padding: 20px;
     top:40%; 
