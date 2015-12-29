@@ -58,6 +58,7 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     templateUrl: 'templates/game-table.html',
     controller: 'GameTableCtrl'
   })
+   
 
   .state('all-views', {
     url: '/all-views',

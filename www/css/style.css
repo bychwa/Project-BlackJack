@@ -52,6 +52,9 @@ button{
   height:20%;
    
 }
+.back_selected{
+	border: 2px solid #2195F3;
+}
 .pause_btn{
   width: 70px;
   height: 70px;

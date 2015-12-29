@@ -321,6 +321,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
     $scope.Game.Table.toogle_card_action=false;
     $scope.Game.Table.pressed_card=null;
+    $scope.backgrounds = ["../faces/back.png", "../faces/back_old2.png"];
     
     $scope.top_scorer=function(players){
       
@@ -710,8 +711,6 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
 .controller('AllViewsCtrl', function($scope,$rootScope, $state) {
     $scope.views = ["Home-AcceptInvitation", "Home-InviteUsers", "Home-Username", "Home-Usertype",
-                    "Player-Hand", "Player-Waiting", "Game-Table"];
-    $scope.get_views=function(){
-      return 0;
-    };
+                    "Player-Hand", "Player-Waiting", "Game-Table", "Game-Options"];
+
 });
