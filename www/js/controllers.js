@@ -707,53 +707,10 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     });
 
 })
-.controller('TableGameCtrl',function($scope,$state,$rootScope, Cards, Game, $ionicPopup, $timeout){
-  
-    //$rootScope.user=$rootScope.user;
-    $scope.cards = Cards.all();
-    $scope.players = $rootScope.players;
-    
-    $scope.choosePlayer=function(){        
-
-        var listPopup = $ionicPopup.show({
-         template: '<ion-list>                                '+
-                   '  <ion-item ng-repeat="player in players" ng-click="giveCard(player)"> '+
-                   '    {{player.name}}                              '+
-                   '  </ion-item>                             '+
-                   '</ion-list>                               ',
-         
-         title: 'Which player ?',
-         scope: $scope,
-         buttons: [
-           { text: 'Cancel' },
-         ]
-        }); 
-    }
-
-    $scope.giveCard=function(player){        
-
-        // implementation backend give card
-        console.log("give card to " + player.name);
-    }
-
-    $scope.shuffle=function(){        
-
-        // implementation backend give card
-        console.log("shuffle");
-    }
-
-    $scope.distribute=function(){        
-
-        // implementation backend give card
-        console.log("distribute");
-    }
-    
-})
-
 
 .controller('AllViewsCtrl', function($scope,$rootScope, $state) {
     $scope.views = ["Home-AcceptInvitation", "Home-InviteUsers", "Home-Username", "Home-Usertype",
-                    "Player-Hand", "Player-Waiting", "Table"];
+                    "Player-Hand", "Player-Waiting", "Game-Table"];
     $scope.get_views=function(){
       return 0;
     };
