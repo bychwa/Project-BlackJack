@@ -4,9 +4,9 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     
     console.log('scope for usertype-before',$scope);
     
-    $localstorage.set('User',"");
-    $localstorage.set('Game',"");
-    //$scope.user = $localstorage.getObject('User');
+    //$localstorage.set('User',"");
+    //$localstorage.set('Game',"");
+    $scope.user = $localstorage.getObject('User');
         
 
     $scope.audio_click = new Audio('audio/click.mp3');
@@ -191,6 +191,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 })
 
 .controller('PlayerHandGameCtrl',function($scope,$state,$localstorage, $cordovaDeviceMotion,ionicToast, $rootScope,Cards,Game,$interval){
+    
     console.log('scope for playerhand-before',$scope);
     
     $scope.user={};
@@ -201,6 +202,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     $scope.Game.Hand={};
 
     var options = { frequency: 20000 };
+
     document.addEventListener("deviceready", function () {
 
       var watch = $cordovaDeviceMotion.watchAcceleration(options);
@@ -250,12 +252,14 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
       Game.play_a_card($scope.Game.code,$scope.user.name,$scope.Game.Hand.selected_card.id).then(function(data){
             
             if(data.success){
+
                 ionicToast.show("Player "+$scope.user.name+" was successfully served a card ", 'bottom', false, 2500);
-                $scope.Game.Hand.center_card_class="";
                 
+                //$scope.fetch_cards();
+                
+                $scope.Game.Hand.center_card_class="";
                 $scope.Game.Hand.selected_card=Cards.back();
 
-      
             }else{
 
                 ionicToast.show("Error! Player "+$scope.user.name+" was not successfully served a card ", 'bottom', false, 2500);
@@ -294,7 +298,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
         });
 
     }
-    var promise = $interval($scope.fetch_cards, 2000);
+    var promise = $interval($scope.fetch_cards, 1000);
     
     // Cancel interval on page changes
     $scope.$on('$destroy', function(){
@@ -311,6 +315,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     $scope.user=$localstorage.getObject('User');
     $scope.Game=$localstorage.getObject('Game');
     $scope.Game.Table={};
+    $scope.Game.Settings={};
     $scope.Game.Table.deckcards=[];
     $scope.Game.scores={};
 
@@ -340,6 +345,14 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     }
     $scope.fetch_cards=function(){
         
+        function deck_contains_card(deck,card){
+            for (var i = deck.length - 1; i >= 0; i--) {
+                if(deck[i].i==card.i){
+                  return true;
+                }
+            }
+            return false;
+        }
         Game.fetch_cards($scope.Game.code,"deck").then(function(deckcards){
             
               $scope.container = document.getElementById('tabledeck');
@@ -366,18 +379,22 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
                 });
 
-              
               if(deck.length!=$scope.Game.Table.deckcards.length){
+              
+                  for (var i = 0; i < deck.length; i++) {
+                      
+                      var dc = deck[i];
 
-                  for (var i = $scope.Game.Table.deckcards.length; i < deck.length ; i++) {
-                        var dc = deck[i];
-                        
-                        dc.setSide("front");
-                        dc.mount($scope.container);
-                        
-                  };
+                      if(!deck_contains_card($scope.Game.Table.deckcards,dc)){
 
-                  $scope.Game.Table.deckcards=deck;
+                            dc.setSide("front");                            
+                            dc.mount($scope.container);
+                            $scope.Game.Table.deckcards.push(dc);
+                            console.log('gameactivity','card '+dc.i+' added to the deck');  
+                      }
+
+
+                  }
               }
         });
 
@@ -589,30 +606,33 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
         scope: $scope,
         animation: 'slide-in-up'
       }).then(function(modal) {
-          $scope.modal = modal;
+          $scope.scoremodal = modal;
       });
-    $scope.openModal = function() {
-      $scope.modal.show();
+    $ionicModal.fromTemplateUrl('templates/game-options.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+          $scope.optionsmodal = modal;
+      });  
+    $scope.openModal = function(modal) {
+        modal.show();
     };
-    $scope.closeModal = function() {
-      $scope.modal.hide();
+    $scope.closeModal = function(modal) {
+        modal.hide();
     };
     //Cleanup the modal when we're done with it!
     $scope.$on('$destroy', function() {
-      $scope.modal.remove();
+      //$scope.modal.remove();
     });
-    // Execute action on hide modal
-    $scope.$on('modal.hidden', function() {
-      // Execute action
-    });
-    // Execute action on remove modal
-    $scope.$on('modal.removed', function() {
-      // Execute action
-    });
+
     $scope.score_game=function(){
-        $scope.openModal();
+        $scope.openModal($scope.scoremodal);
         $scope.pausePopup.close();
-        
+    }
+
+    $scope.game_options=function(){
+        $scope.openModal($scope.optionsmodal);
+        $scope.pausePopup.close();
     }
 
     $scope.initializeGame=function(){
@@ -623,7 +643,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
         var $container = document.getElementById('container')
 
-        $scope.deck = Deck()
+        $scope.deck = Deck($scope.Game.Settings.jokers,$scope.Game.Settings.number_of_deck)
 
         $scope.deck.mount($container)
 
@@ -634,9 +654,16 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
       $scope.pausePopup.close();
     }
     $scope.restart_game=function(){
-        Game.restart_game($scope.Game.code).then(function(data){
 
+        Game.restart_game($scope.Game.code).then(function(data){
+            var tabledeck = document.getElementById('tabledeck');
+              
             $scope.pausePopup.close();
+            
+            while (tabledeck.firstChild) {
+                tabledeck.removeChild(tabledeck.firstChild);
+            }
+
             $scope.deck.unmount();
             $scope.start_game();
             $scope.shuffle_cards();
@@ -649,8 +676,8 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
         $scope.pausePopup="";
 
         $scope.pausePopup = $ionicPopup.show({
-                                  title:"Game Paused!!",  
-                                  template:'<div class="button-bar button button-dark" ng-click="resume_game()" style="text-align:center;">Resume</div><hr/><div class="button-bar button button-dark" ng-click="restart_game()">Restart</div><hr/><div class="button-bar button button-dark" ng-click="score_game()">Score</div><hr/><div class="button-bar button button-dark text-center">Quit</div>',
+                                  title:"Game Paused!!<hr/>",  
+                                  template:'<div class="button-bar button button-positive" ng-click="resume_game()" style="text-align:center;">Resume</div><hr/><div class="button-bar button button-positive" ng-click="restart_game()">Restart</div><hr/><div class="button-bar button button-positive" ng-click="game_options()">Options</div><hr/><div class="button-bar button button-positive" ng-click="score_game()">Score</div><hr/><div class="button-bar button button-positive text-center">Quit</div>',
                                   scope:$scope,
                                 });
 
@@ -669,7 +696,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
     $scope.start_game();
 
-    var promise = $interval($scope.fetch_cards, 2000);
+    var promise = $interval($scope.fetch_cards, 1000);
     
     // Cancel interval on page changes
     $scope.$on('$destroy', function(){

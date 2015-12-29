@@ -1,0 +1,69 @@
+<ion-modal-view>
+    <ion-header-bar align-title="left" class="bar-positive">
+        <h1 class="title" style="text-align: center">Options</h1>
+    </ion-header-bar>
+    <ion-content scroll="true">
+            <div class="card">
+              <div class="item">
+                <h2 style="color: black">Cards for each player <h2 style="text-align:center;">{{ Game.Settings.cards_for_each }}</h2></h2>
+                <div class="list">
+                  <div class="item range range-positive">
+                    <span>1</span>
+                    <input type="range" name="cards_for_each" ng-model="Game.Settings.cards_for_each" ng-init="Game.Settings.cards_for_each=1" min="1" max="10" value="1">
+                    <span>10</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="item">
+                <h2 style="color: black">Decks <h2 style="text-align:center;">{{ Game.Settings.number_of_deck }}</h2></h2>
+                <div class="list">
+                  <div class="item range range-positive">
+                    <span>1</span>
+                    <input type="range" name="number_of_deck" ng-model="Game.Settings.number_of_deck" ng-init="Game.Settings.number_of_deck=0" min="1" max="10" value="0">
+                    <span>10</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item item-text-wrap">
+                <div class="list">
+                    <li class="item item-toggle">
+                         Jokers
+                         <label class="toggle toggle-positive">
+                           <input type="checkbox" ng-model="Game.Settings.jokers">
+                           <div class="track">
+                             <div class="handle"></div>
+                           </div>
+                         </label>
+                      </li>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+              <div class="item item-text-wrap">
+                <div class="list">
+                    <li class="item item-toggle">
+                         Sound
+                         <label class="toggle toggle-positive">
+                           <input type="checkbox" ng-model="Game.Settings.sound">
+                           <div class="track">
+                             <div class="handle"></div>
+                           </div>
+                         </label>
+                      </li>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+              <div class="item item-text-wrap">
+                <div class="list text-center">
+                    <li class="item item-toggle">
+                         Game Code
+                      </li>
+                      <img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chl={{ Game.code }}&chld=H|0" class="card padding "/> 
+                    </div>
+                </div>
+            </div>
+    </ion-content>
+</ion-modal-view>

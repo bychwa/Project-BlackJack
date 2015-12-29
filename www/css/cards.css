@@ -35,32 +35,34 @@ body {
 }
 
 #player_menu,#game_menu {
-  position: fixed;
-  top: 5%;
-  left: 0;
-  width: 100%;
-  background-color: #2196F3;
-  padding: 0.25rem;
-  text-align: center;
+    position: fixed;
+    top: 5%;
+    left: 0;
+    width: 100%;
+    background-color: #2196F3;
+    padding: 0.25rem;
+    text-align: center;
 }
 #player_menu button,#game_menu button {
-  background: none;
-  border: 1px solid #FFFFFF;
-  border-radius: 5px;
-  width: 10%;
-  outline: none;
-  margin: 0.1rem;
-  padding: 0.4rem;
-  font: inherit;
-  font-size: 0.75rem;
-  line-height: 1;
-  color: #fff;
-  cursor: pointer;
+    background: none;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+    width: 10%;
+    outline: none;
+    margin: 0.1rem;
+    padding: 0.4rem;
+    font: inherit;
+    font-size: 0.75rem;
+    line-height: 1;
+    color: #fff;
+    cursor: pointer;
 }
 
-#player_menu button:hover ,,#game_menu button:hover{
-  background-color: #fff;
-  color: #444;
+#player_menu button:hover, #game_menu button:hover{
+  background-color: #2196F3;
+  color: red;
+  border: 1px solid red;
+    
 }
 #tabledeck{
   position: fixed;
