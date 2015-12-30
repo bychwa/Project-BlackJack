@@ -53,6 +53,7 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     templateUrl: 'templates/player-hand.html',
     controller: 'PlayerHandGameCtrl'
   })
+  
   .state('game-table', {
     url: '/game-table',
     templateUrl: 'templates/game-table.html',

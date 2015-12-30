@@ -70,11 +70,12 @@
                         Back Card
                     </li>
                     <div>
-                        <ion-scroll direction="x">
-                             <img class="" width="15%" height="15%" ng-repeat="back_src in backgrounds" src="{{ back_src }}">
-                           <!-- <img class="" width="15%" height="15%" src="../faces/back.png">
-                            <img class="back_selected" width="15%" height="15%" src="../faces/back_old2.png"> --> 
-                        </ion-scroll>
+                        <!--<ion-scroll direction="x">-->
+                             <!--<img class="{{is_back_card_selected(back_src)? back_selected : ""; }}" width="15%" height="15%" ng-repeat="back_src in backgrounds" ng-click="select_back_card(back_src)" src="{{ back_src }}">-->
+                             <i class="icon ion-chevron-left" ng-click="select_previous_back_card()"></i>
+                             <img width="15%" height="15%" src="{{get_selected_back()}}">
+                             <i class="icon ion-chevron-right" ng-click="select_next_back_card()"></i>
+                        <!--</ion-scroll>-->
                     </div>
                 </div>
             </div>

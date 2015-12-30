@@ -320,8 +320,37 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
     $scope.Game.Table.toogle_card_action=false;
     $scope.Game.Table.pressed_card=null;
-    $scope.backgrounds = ["../faces/back.png", "../faces/back_old2.png"];
+    $scope.back_card_selected_counter = 0;
+    $scope.back_card_selected = $scope.backgrounds[$scope.back_card_selected_counter];
     
+    
+    $scope.get_selected_back = function() {
+        return $scope.back_card_selected;
+    };
+    $scope.update_back_card = function(counter) {
+        $scope.back_card_selected_counter = counter % $scope.backgrounds.length;
+        // Update back card 
+        $scope.back_card_selected = $scope.backgrounds[$scope.back_card_selected_counter];
+
+    };
+    $scope.select_previous_back_card = function() {
+        var counter = $scope.back_card_selected_counter;
+        if (counter == 0) { counter = $scope.backgrounds.length;}
+        counter--;
+        $scope.update_back_card(counter);
+    }; 
+    $scope.select_next_back_card = function() {
+        var counter = $scope.back_card_selected_counter;
+        counter++;
+        $scope.update_back_card(counter);
+    }; 
+    $scope.is_back_card_selected = function(back_card) {
+        console.log("is_back_card_selected called ");
+        console.log(back_card);
+        return $scope.back_card_selected == back_card;
+    };
+
+
     $scope.top_scorer=function(players){
       
         var max=0; var top=0; var score_sheet=[];
@@ -342,7 +371,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
         };
         return score_sheet[top];
 
-    }
+    };
     $scope.fetch_cards=function(){
         
         function deck_contains_card(deck,card){
@@ -352,7 +381,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
                 }
             }
             return false;
-        }
+        };
         Game.fetch_cards($scope.Game.code,"deck").then(function(deckcards){
             
               $scope.container = document.getElementById('tabledeck');
@@ -363,7 +392,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
                     
                     var card=Deck().cards[dc.card];
                     
-                    card.enableDragging()
+                    card.enableDragging();
                     
                     Hammer(card.$el).on("doubletap", onDoubleTap);
                     Hammer(card.$el).on("press", onPress);
@@ -398,7 +427,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
               }
         });
 
-    }
+    };
     
     $scope.shuffle_cards=function(){
         
@@ -408,11 +437,11 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
         $scope.deck.shuffle();
         ionicToast.show("Shuffling cards!!", 'bottom', false, 2500);
            
-    }
+    };
     $scope.close_popup=function(popup){
         popup.close();
 
-    }
+    };
     $scope.serve_a_player=function(player,popup){
       
         Game.serve_a_card($scope.Game.code,player.name,$scope.Game.Table.pressed_card.i).then(function(data){
@@ -443,7 +472,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
         
 
-    }
+    };
 
     $scope.serve_card=function(){
         
@@ -461,7 +490,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
         });
 
-    }
+    };
     $scope.distribute_cards=function(){
         var distributePopup = $ionicPopup.show({
                                   template: '<input type="number" ng-model="Game.Table.distribution_size"/>',
@@ -513,7 +542,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
              
         });
             
-    }
+    };
 
     $scope.menu_click_event=function(menu,button){
         switch(menu){
@@ -552,7 +581,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
           default:
             break;    
         }   
-    }
+    };
 
     $scope.togle_visibility=function(item,property){
         var x = document.getElementById(item).className;
@@ -566,22 +595,22 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
             document.getElementById(item).className -=" hidden";
           }
         }
-    }
+    };
 
     $scope.card_doubletapped=function(card){
         $scope.Game.Table.doubletapped_card=card;
         card.setSide(card.side=="front" ? "back":"front");
-    }
+    };
     $scope.card_pressed=function(card){
         $scope.Game.Table.pressed_card=card;
         $scope.togle_visibility("player_menu","show");
         $scope.togle_visibility("game_menu","hide");
-    }
+    };
     $scope.card_remove=function(card){
         card.$el.className += " hidden";         
         $scope.deck.cards.splice($scope.deck.cards.indexOf(card),1);
             
-    }
+    };
     $scope.game_play=function(){
 
         $scope.deck.cards.forEach(function (card, i) {
@@ -600,7 +629,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
             }
         });
       
-    }
+    };
 
     $ionicModal.fromTemplateUrl('templates/game-score.html', {
         scope: $scope,
@@ -628,12 +657,12 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     $scope.score_game=function(){
         $scope.openModal($scope.scoremodal);
         $scope.pausePopup.close();
-    }
+    };
 
     $scope.game_options=function(){
         $scope.openModal($scope.optionsmodal);
         $scope.pausePopup.close();
-    }
+    };
 
     $scope.initializeGame=function(){
         
@@ -649,10 +678,10 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
         $scope.game_play();
 
-    }
+    };
     $scope.resume_game=function(){
       $scope.pausePopup.close();
-    }
+    };
     $scope.restart_game=function(){
 
         Game.restart_game($scope.Game.code).then(function(data){
@@ -671,7 +700,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
         });
         
 
-    }
+    };
     $scope.pause_game=function(){
         $scope.pausePopup="";
 
@@ -687,12 +716,12 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
         });
 
-    }
+    };
     $scope.start_game=function(){
         $scope.initializeGame();
         console.log($scope.deck.cards);
     
-    }
+    };
 
     $scope.start_game();
 
