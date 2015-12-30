@@ -4,10 +4,9 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     
     console.log('scope for usertype-before',$scope);
     
-    //$localstorage.set('User',"");
-    //$localstorage.set('Game',"");
+    // $localstorage.set('User',"");
+    // $localstorage.set('Game',"");
     $scope.user = $localstorage.getObject('User');
-        
 
     $scope.audio_click = new Audio('audio/click.mp3');
         

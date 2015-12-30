@@ -1,5 +1,5 @@
 <ion-view >
-  <ion-content scroll="false" zooming="true" class="padding">
+  <ion-content class="table" scroll="false" zooming="true" class="padding">
     
     <div id="player_menu" class="hidden"><button ng-click="serve_card()">Serve</button><button ng-click="menu_click_event('player','game_menu')">Game Menu</button><button ng-click="menu_click_event('player','exit')">Exit</button></div>
 
@@ -12,7 +12,8 @@
     	<button ng-click="menu_click_event('game','exit')">Exit</button>
 	</div>
 
-    <img ng-click="pause_game()" class="pause_btn" src="images/pause.ico">
+    <div ng-click="pause_game()" class="pause_btn"></div>
+    
     <div id="topbar"></div>
     <div id="container"></div>
     <div id="tabledeck"></div>

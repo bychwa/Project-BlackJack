@@ -1,11 +1,11 @@
-<ion-view >
+<ion-view class="bg_cardfront">
   <ion-content scroll="false" class="padding">
     
     <div class="row row-center vertical_center">
         <div class="col col-center list">
           <label class="item item-radio card">
             <input type="radio" ng-model="user.type" name="user.type" value="deck" ng-click="click()"/>
-              <div class="radio-content"> <div class="item-content"> Deck </div> <i class="radio-icon ion-checkmark"></i></div>
+              <div class="radio-content"><div class="item-content"> Deck </div> <i class="radio-icon ion-checkmark"></i></div>
           </label>
           <label class="item item-radio card">
             <input type="radio" ng-model="user.type" name="user.type" value="player" ng-click="click()"/>
@@ -14,7 +14,7 @@
           <button class="button button-block button-negative" ng-disabled="!user.type" ng-click="select_usertype(user)">
             Continue {{ user.type? ' as '+ user.type:'' }}
           </button>
-          <button class="button button-block button-negative" ng-click="go_to_debugView()">All Views</button>
+          <button class="button button-block button-negative hidden"  ng-click="go_to_debugView()">All Views</button>
         </div>
     </div>
     
