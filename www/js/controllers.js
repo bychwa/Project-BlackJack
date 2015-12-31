@@ -28,9 +28,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     
         }
     }
-    $scope.go_to_debugView=function(){
-        $state.go('all-views');
-    }
+
   })
 
 .controller('UsernameCtrl', function($scope,$rootScope,$localstorage, $state) {
@@ -668,16 +666,17 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
     $scope.initializeGame=function(){
         
-        var prefix = Deck.prefix
-        var transform = prefix('transform')
-        var translate = Deck.translate
+        var prefix = Deck.prefix;
+        var transform = prefix('transform');
+        var translate = Deck.translate;
 
-        var $container = document.getElementById('container')
+        var $container = document.getElementById('container');
 
-        $scope.deck = Deck($scope.Game.Settings.jokers,$scope.Game.Settings.number_of_deck)
+        $scope.deck = Deck($scope.Game.Settings.jokers,$scope.Game.Settings.number_of_deck);
 
-        $scope.deck.mount($container)
-
+        $scope.deck.mount($container);
+        $scope.deck.flip();
+        $scope.deck.flip();
         $scope.game_play();
 
     };
