@@ -321,6 +321,8 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     $scope.Game.Table.toogle_card_action=false;
     $scope.Game.Table.pressed_card=null;
     $scope.back_card_selected_counter = 0;
+    $scope.backgrounds = ["../faces/back.png", "../faces/back_old2.png"];
+    
     $scope.back_card_selected = $scope.backgrounds[$scope.back_card_selected_counter];
     
     
