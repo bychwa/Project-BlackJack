@@ -1,5 +1,5 @@
-<ion-view view-title="{{ user.name }}">
-  <ion-content scroll="false" class="padding">
+<ion-view can-swipe-back="false" view-title="{{ user.name }}">
+  <ion-content scroll="false" class="bg_cardfront padding">
 		<div class="container">
 
   			<div class="row row-center left1">
@@ -15,8 +15,8 @@
 		<div class="row row-center div_action_buttons">
 			<div class="button-bar bar-dark action_buttons" ng-show="Game.Hand.toogle_card_action">
 			  <a class="button" ng-click="play_a_card()">Play</a>
-			  <a class="button">Drop</a>
-			  <a class="button">hide</a>
+			  <a class="button" ng-click="show_walkthrough()">Help</a>
+			  <a class="button" ng-click="Game.Hand.toogle_card_action=false">hide</a>
 			</div>
 		</div>
 		
@@ -25,6 +25,20 @@
 				<img class="box {{ is_selected() }}" ng-repeat="card in Game.Hand.playercards" ng-click="select_card(card_maping(card.card))" src="{{ card_maping(card.card).image }}">
 			</ion-scroll>
 		</div>
-    	
+    	<walkthrough id="walkthrough_1"
+	        walkthrough-type="transparency"
+	        is-active="walkthrough_one" on-walkthrough-hide="hide_walkthrough(1)">
+	        <img src="images/walkthrough_image_mobile_one.png" style="height: 100%; width: 100%;"/>
+	    </walkthrough>
+	    <walkthrough id="walkthrough_2"
+	        walkthrough-type="transparency"
+	        is-active="walkthrough_two" on-walkthrough-hide="hide_walkthrough(2)">
+	        <img src="images/walkthrough_image_mobile_two.png" style="height: 100%; width: 100%;"/>
+	    </walkthrough>
+	    <walkthrough id="walkthrough_3"
+	        walkthrough-type="transparency"
+	        is-active="walkthrough_three" on-walkthrough-hide="hide_walkthrough(3)">
+	        <img src="images/walkthrough_image_mobile_three.png" style="height: 100%; width: 100%;"/>
+	    </walkthrough>
   </ion-content>
 </ion-view>

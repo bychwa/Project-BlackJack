@@ -1,4 +1,4 @@
-<ion-view >
+<ion-view can-swipe-back="false" style="background-color:#000000;">
   <ion-content class="table" scroll="false" zooming="true" class="padding">
     
     <div id="player_menu" class="hidden"><button ng-click="serve_card()">Serve</button><button ng-click="menu_click_event('player','game_menu')">Game Menu</button><button ng-click="menu_click_event('player','exit')">Exit</button></div>
@@ -11,12 +11,61 @@
     	<button ng-click="menu_click_event('game','card_menu')">Card Menu</button>
     	<button ng-click="menu_click_event('game','exit')">Exit</button>
 	</div>
-
-    <div ng-click="pause_game()" class="pause_btn"></div>
+    <div id="score_board">
+        <h5 style="color:white;" ng-repeat="player in Game.players">{{ player.name }} - {{ player_score(player) }}</h5>
+    </div>
+    
+    <div ng-click="pause_game()" class="pause_btn" id="pause_btn"></div>
     
     <div id="topbar"></div>
     <div id="container"></div>
     <div id="tabledeck"></div>
     
+    <walkthrough id="walkthrough_1"
+        walkthrough-type="transparency"
+        is-active="walkthrough_one" on-walkthrough-hide="hide_walkthrough(1)">
+        <img src="images/walkthrough_image_one.png" style="height: 100%; width: 100%;"/>
+    </walkthrough>
+    <walkthrough id="walkthrough_2"
+        walkthrough-type="transparency"
+        is-active="walkthrough_two" on-walkthrough-hide="hide_walkthrough(2)">
+        <img src="images/walkthrough_image_two.png" style="height: 100%; width: 100%;"/>
+    </walkthrough>
+    <walkthrough id="walkthrough_3"
+        walkthrough-type="transparency"
+        is-active="walkthrough_three" on-walkthrough-hide="hide_walkthrough(3)">
+        <img src="images/walkthrough_image_three.png" style="height: 100%; width: 100%;"/>
+    </walkthrough>
+    <walkthrough id="walkthrough_4"
+        walkthrough-type="transparency"
+        is-active="walkthrough_four" on-walkthrough-hide="hide_walkthrough(4)">
+        <img src="images/walkthrough_image_four.png" style="height: 100%; width: 100%;"/>
+    </walkthrough>
+    <walkthrough id="walkthrough_5"
+        walkthrough-type="transparency"
+        is-active="walkthrough_five" on-walkthrough-hide="hide_walkthrough(5)">
+        <img src="images/walkthrough_image_five.png" style="height: 100%; width: 100%;"/>
+    </walkthrough>
+    <walkthrough id="walkthrough_6"
+        walkthrough-type="transparency"
+        is-active="walkthrough_six" on-walkthrough-hide="hide_walkthrough(6)">
+        <img src="images/walkthrough_image_six.png" style="height: 100%; width: 100%;"/>
+    </walkthrough>
+    <walkthrough id="walkthrough_7"
+        walkthrough-type="transparency"
+        is-active="walkthrough_seven" on-walkthrough-hide="hide_walkthrough(7)">
+        <img src="images/walkthrough_image_seven.png" style="height: 100%; width: 100%;"/>
+    </walkthrough>
+    <walkthrough id="walkthrough_8"
+        walkthrough-type="transparency"
+        is-active="walkthrough_eight" on-walkthrough-hide="hide_walkthrough(8)">
+        <img src="images/walkthrough_image_eight.png" style="height: 100%; width: 100%;"/>
+    </walkthrough>
+    <walkthrough id="walkthrough_9"
+        walkthrough-type="transparency"
+        is-active="walkthrough_nine" on-walkthrough-hide="hide_walkthrough(9)">
+        <img src="images/walkthrough_image_nine.png" style="height: 100%; width: 100%;"/>
+    </walkthrough>
+
   </ion-content>  
 </ion-view>

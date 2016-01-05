@@ -1,17 +1,17 @@
-angular.module('starter.controllers', ['ngCordova','ionic-toast'])
+angular.module('starter.controllers', ['ngCordova','ionic-toast','ng-walkthrough'])
 
 .controller('HomeCtrl', function($scope,$rootScope,$ionicPlatform,ionicToast,$state,$localstorage,$timeout /*,$cordovaDevice*/) {
     
     console.log('scope for usertype-before',$scope);
     
-    // $localstorage.set('User',"");
-    // $localstorage.set('Game',"");
-    $scope.user = $localstorage.getObject('User');
+    $localstorage.set('User',"");
+    $localstorage.set('Game',"");
 
-    $scope.audio_click = new Audio('audio/click.mp3');
+    // $scope.user = $localstorage.getObject('User');
+    // $scope.audio_click = new Audio('audio/click.mp3');
         
     $scope.click=function(){
-        $scope.audio_click.play();
+        // $scope.audio_click.play();
     }
     
     $scope.select_usertype=function(user){
@@ -56,14 +56,12 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
   $scope.Game.code="";
 
   $scope.get_players=function(){
-
       Game.players($scope.Game.code).then(function(data){
           if($scope.Game.players.length!=data.length){
-            ionicToast.show("Success! New player joined!", 'bottom', false, 2500);
+             ionicToast.show("Success! New player joined!", 'bottom', false, 2000);
           }
           $scope.Game.players=data; 
           $localstorage.setObject('Game',$scope.Game);
-      
       });
   }
   $scope.start_game=function(){
@@ -73,10 +71,8 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     Game.start_game($scope.Game.code).then(function(data){
 
         console.log('game started!');
-        
         $state.go('game-table');
         console.log('scope for inviteusers-after',$scope);
-    
     
     });
 
@@ -94,6 +90,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
   });
   
   var promise = $interval($scope.get_players, 2000);
+
   // Cancel interval on page changes
   $scope.$on('$destroy', function(){
       if (angular.isDefined(promise)) {
@@ -126,7 +123,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
                       $state.go('player-waiting');
                       console.log('scope for acceptinvitation-after',$scope);
-    
+
                   });
               }else{
                 var alertPopup = $ionicPopup.alert({
@@ -165,13 +162,21 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     $scope.wait_game_start=function(){
         
         Game.wait_game_start($scope.Game.code).then(function(data){
-            $scope.game_status=data;
+            $scope.game_status=data.game_state;
+            
+            if(data.success){
+                if(data.game_state==1){
+                      $state.go("player-hand");
+                      console.log('scope for waitgame-after',$scope);
+          
+                }else{
+                  //game hasnt started
 
-            if(data==1){
-                $state.go("player-hand");
-                console.log('scope for waitgame-after',$scope);
-    
-            }            
+
+                }   
+                
+            }
+                     
         });
 
     }
@@ -187,7 +192,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
 })
 
-.controller('PlayerHandGameCtrl',function($scope,$state,$localstorage, $cordovaDeviceMotion,ionicToast, $rootScope,Cards,Game,$interval){
+.controller('PlayerHandGameCtrl',function($scope,$state,$localstorage, ionicToast, $rootScope,Cards,Game,$interval){
     
     console.log('scope for playerhand-before',$scope);
     
@@ -198,35 +203,25 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     $scope.Game=$localstorage.getObject('Game');
     $scope.Game.Hand={};
 
-    var options = { frequency: 20000 };
-
-    document.addEventListener("deviceready", function () {
-
-      var watch = $cordovaDeviceMotion.watchAcceleration(options);
-          watch.then(
-            null,
-            function(error) {
-            // An error occurred
-            },
-            function(result) {
-              var X = result.x;
-              var Y = result.y;
-              var Z = result.z;
-              var timeStamp = result.timestamp;
-              
-              if(Z>=10){
-                alert("People can see your cards");
-              }
-          });
-
-      watch.clearWatch();
-    }, false);
-
     $scope.Game.Hand.selected_card=Cards.back();
     $scope.Game.Hand.toogle_card_action=false;
 
     $scope.Game.Hand.center_card_class="";
 
+    $scope.hide_walkthrough=function(number){
+        $scope.walkthrough_one=false;
+        $scope.walkthrough_two=false;
+        $scope.walkthrough_three=false;
+        switch(number){
+            case 1: $scope.walkthrough_two=true; break;
+            case 2: $scope.walkthrough_three=true; break;
+        }
+    }
+    $scope.show_walkthrough=function(){
+        
+        $scope.walkthrough_one=true;
+
+    }
     $scope.toogleCardAction=function(){
       if($scope.Game.Hand.selected_card.id!=52){
         $scope.Game.Hand.toogle_card_action=!$scope.Game.Hand.toogle_card_action;
@@ -252,8 +247,6 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
                 ionicToast.show("Player "+$scope.user.name+" was successfully served a card ", 'bottom', false, 2500);
                 
-                //$scope.fetch_cards();
-                
                 $scope.Game.Hand.center_card_class="";
                 $scope.Game.Hand.selected_card=Cards.back();
 
@@ -265,9 +258,8 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
         },function(error){
             
-            ionicToast.show("Error! Player "+$scope.user.name+" card:"+$scope.Game.Hand.selected_card+" code:"+$scope.Game.code, 'bottom', true, 2500);
+            // ionicToast.show("Error! Player "+$scope.user.name+" card:"+$scope.Game.Hand.selected_card+" code:"+$scope.Game.code, 'bottom', true, 2500);
             console.log(error);
-            // ionicToast.show(error, 'bottom', false, 2500);
             
         });
     }
@@ -289,7 +281,6 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
             }
             
-
             console.log('scope for playerhand-loop',$scope);
                 
         });
@@ -318,6 +309,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
     $scope.Game.Table.toogle_card_action=false;
     $scope.Game.Table.pressed_card=null;
+<<<<<<< Updated upstream
     $scope.back_card_selected_counter = 0;
     $scope.backgrounds = ["../faces/back.png", "../faces/back_old2.png"];
     
@@ -351,6 +343,48 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     };
 
 
+=======
+    $scope.Game.Table.card_background={};
+
+    $scope.backgrounds = [
+                          { id:1,name:"Default", src:"faces/back1.png"},
+                          { id:2,name:"China", src:"faces/back2.png" },
+                          { id:3,name:"China Round", src:"faces/back2_round.png" },
+                          { id:4,name:"Germany", src:"faces/back3.png" },
+                          { id:5,name:"Germany Round", src:"faces/back3_round.png" },
+                          { id:6,name:"Clémo!", src:"faces/back4.png" },
+                          ];
+    
+
+    $scope.set_card_background=function(){
+        var el = document.querySelectorAll(".bj_card .back");
+        for (i = 0; i < el.length; i++) {
+            el[i].style.backgroundImage="url('"+$scope.Game.Table.card_background.src+"')";
+        }
+    }
+    $scope.select_background=function(back){
+        $scope.Game.Table.card_background=back;
+        var el = document.querySelectorAll(".bj_card .back");
+        for (i = 0; i < el.length; i++) {
+            el[i].style.backgroundImage="url('"+$scope.Game.Table.card_background.src+"')";
+        }
+    }
+    $scope.background_selected=function(id){
+
+        if($scope.Game.Table.card_background.id==id){
+          return "back_selected";
+        }
+        return "";
+    }
+
+    $scope.player_score=function(player){
+        var total = parseInt(player.score.round_1) + parseInt(player.score.round_2) + parseInt(player.score.round_3) + parseInt(player.score.round_4) + parseInt(player.score.round_5);
+        
+        return total;
+
+
+    }
+>>>>>>> Stashed changes
     $scope.top_scorer=function(players){
       
         var max=0; var top=0; var score_sheet=[];
@@ -381,7 +415,12 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
                 }
             }
             return false;
+<<<<<<< Updated upstream
         };
+=======
+        }
+
+>>>>>>> Stashed changes
         Game.fetch_cards($scope.Game.code,"deck").then(function(deckcards){
             
               $scope.container = document.getElementById('tabledeck');
@@ -628,6 +667,9 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
                  $scope.card_doubletapped(card);
             }
         });
+        
+        $scope.select_background($scope.backgrounds[0]);
+
       
     };
 
@@ -649,10 +691,6 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
     $scope.closeModal = function(modal) {
         modal.hide();
     };
-    //Cleanup the modal when we're done with it!
-    $scope.$on('$destroy', function() {
-      //$scope.modal.remove();
-    });
 
     $scope.score_game=function(){
         $scope.openModal($scope.scoremodal);
@@ -693,6 +731,8 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
             while (tabledeck.firstChild) {
                 tabledeck.removeChild(tabledeck.firstChild);
             }
+            
+            $scope.set_card_background();
 
             $scope.deck.unmount();
             $scope.start_game();
@@ -701,13 +741,60 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
         });
         
 
+<<<<<<< Updated upstream
     };
+=======
+    }
+    $scope.hide_walkthrough=function(number){
+        $scope.walkthrough_one=false;
+        $scope.walkthrough_two=false;
+        $scope.walkthrough_three=false;
+        $scope.walkthrough_four=false;
+        $scope.walkthrough_five=false;
+        $scope.walkthrough_six=false;
+        $scope.walkthrough_seven=false;
+        $scope.walkthrough_eight=false;
+        $scope.walkthrough_nine=false;
+
+        switch(number){
+            case 1: $scope.walkthrough_two=true; break;
+            case 2: $scope.walkthrough_three=true; break;
+            case 3: $scope.walkthrough_four=true; break;
+            case 4: $scope.walkthrough_five=true; break;
+            case 5: $scope.walkthrough_six=true; break;
+            case 6: $scope.walkthrough_seven=true; break;
+            case 7: $scope.walkthrough_eight=true; break;
+            case 8: $scope.walkthrough_nine=true; break;
+        }
+
+    }
+    $scope.show_walkthrough=function(){
+        
+        $scope.walkthrough_index=1;
+
+        $scope.walkthrough_one=true;
+        
+        $scope.game_hints="Game hints to come here!"; 
+
+        $scope.pausePopup.close();
+             
+       
+    }
+    $scope.quit_game=function(){
+        if(confirm("Are you Sure you want to Quit this game?")){
+            $scope.pausePopup.close();
+            $state.go('home-usertype');  
+        }
+        
+
+    }
+>>>>>>> Stashed changes
     $scope.pause_game=function(){
         $scope.pausePopup="";
 
         $scope.pausePopup = $ionicPopup.show({
-                                  title:"Game Paused!!<hr/>",  
-                                  template:'<div class="button-bar button button-positive" ng-click="resume_game()" style="text-align:center;">Resume</div><hr/><div class="button-bar button button-positive" ng-click="restart_game()">Restart</div><hr/><div class="button-bar button button-positive" ng-click="game_options()">Options</div><hr/><div class="button-bar button button-positive" ng-click="score_game()">Score</div><hr/><div class="button-bar button button-positive text-center">Quit</div>',
+                                  title:"<h3>Game Paused!!</h3><hr/>",  
+                                  template:'<div class="button-bar button button-dark option-button" ng-click="resume_game()" style="text-align:center;">Resume</div><hr/><div class="button-bar button button-dark option-button" ng-click="restart_game()">Restart</div><hr/><div class="button-bar button button-dark option-button" ng-click="game_options()">Options</div><hr/><div class="button-bar button button-dark option-button" ng-click="score_game()">Score</div><hr/><div class="button-bar button button-dark option-button" ng-click="show_walkthrough()">Instruction</div><hr/><div class="button-bar button button-dark option-button text-center" ng-click="quit_game()">Quit</div>',
                                   scope:$scope,
                                 });
 
@@ -717,29 +804,40 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast'])
 
         });
 
+<<<<<<< Updated upstream
     };
+=======
+    }
+    
+>>>>>>> Stashed changes
     $scope.start_game=function(){
         $scope.initializeGame();
         console.log($scope.deck.cards);
     
     };
 
+    $scope.get_players=function(){
+        Game.players($scope.Game.code).then(function(data){
+            if($scope.Game.players.length!=data.length){
+               ionicToast.show("Success! New player joined!", 'bottom', false, 2000);
+            }
+            
+            $scope.Game.players=data;
+            $localstorage.setObject('Game',$scope.Game);
+
+        });
+    }
+
     $scope.start_game();
 
     var promise = $interval($scope.fetch_cards, 1000);
     
-    // Cancel interval on page changes
     $scope.$on('$destroy', function(){
         if (angular.isDefined(promise)) {
             $interval.cancel(promise);
             promise = undefined;
         }
+       
     });
-
-})
-
-.controller('AllViewsCtrl', function($scope,$rootScope, $state) {
-    $scope.views = ["Home-AcceptInvitation", "Home-InviteUsers", "Home-Username", "Home-Usertype",
-                    "Player-Hand", "Player-Waiting", "Game-Table", "Game-Options"];
 
 });

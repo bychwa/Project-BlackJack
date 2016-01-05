@@ -33,7 +33,12 @@ body {
   -ms-transform: translate3d(-50%, -50%, 0);
   transform: translate3d(-50%, -50%, 0);
 }
-
+#score_board{
+  position: fixed;
+  top: 5%;
+  left: 2%;
+   
+}
 #player_menu,#game_menu {
     position: fixed;
     top: 5%;
@@ -54,7 +59,7 @@ body {
     /*background: red;*/
     border: 2px solid #FFFFFF;
     border-radius: 5px;
-    width: 10%;
+    width: 12%;
     outline: none;
     margin: 0.1rem;
     padding: 0.4rem;

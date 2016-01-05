@@ -283,7 +283,7 @@ angular.module('starter.services', [])
                 image: 'cards/king_of_diamonds.png'
               }, {
                 id: 52,
-                image: 'faces/back.png'
+                image: 'faces/back1.png'
               }
               ];
 
