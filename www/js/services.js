@@ -119,7 +119,6 @@ angular.module('starter.services', [])
       },      
   };
 })
-
 .factory('Cards', function() {
   // Might use a resource here that returns a JSON array
 
@@ -301,6 +300,27 @@ angular.module('starter.services', [])
         //return cards[number%5];
     }
   };
+})
+
+.factory('Backgrounds', function() {
+ 
+    var backgrounds = [
+                        { id:1,name:"Default", src:"faces/back1.png"},
+                        { id:2,name:"China", src:"faces/back2.png" },
+                        { id:3,name:"China Round", src:"faces/back2_round.png" },
+                        { id:4,name:"Germany", src:"faces/back3.png" },
+                        { id:5,name:"Germany Round", src:"faces/back3_round.png" },
+                        { id:6,name:"Clémo!", src:"faces/back4.png" },
+                      ];
+
+    return {
+      all: function() {
+        return backgrounds;
+      },
+      get:function(number){
+          return backgrounds[number];
+      }
+    };
 })
 
 .factory('$localstorage', ['$window', function($window) {

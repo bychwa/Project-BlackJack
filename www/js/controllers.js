@@ -298,7 +298,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast','ng-walkthrough
 
 })
 
-.controller('GameTableCtrl',function($scope,$state,$localstorage,$ionicModal, $rootScope,ionicToast, Cards, Game,$q, $interval, $ionicPopup, $timeout){
+.controller('GameTableCtrl',function($scope,$state,$localstorage,$ionicModal, $rootScope,ionicToast, Cards,Backgrounds,Game,$q, $interval, $ionicPopup, $timeout){
     
     $scope.user=$localstorage.getObject('User');
     $scope.Game=$localstorage.getObject('Game');
@@ -312,14 +312,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast','ng-walkthrough
     
     $scope.Game.Table.card_background={};
 
-    $scope.backgrounds = [
-                          { id:1,name:"Default", src:"faces/back1.png"},
-                          { id:2,name:"China", src:"faces/back2.png" },
-                          { id:3,name:"China Round", src:"faces/back2_round.png" },
-                          { id:4,name:"Germany", src:"faces/back3.png" },
-                          { id:5,name:"Germany Round", src:"faces/back3_round.png" },
-                          { id:6,name:"Clémo!", src:"faces/back4.png" },
-                          ];
+    $scope.backgrounds = Backgrounds.all();
     
 
     $scope.set_card_background=function(){
@@ -467,8 +460,6 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast','ng-walkthrough
             popup.close();
 
         });
-
-        
 
     };
 
