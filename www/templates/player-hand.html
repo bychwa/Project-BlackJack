@@ -1,24 +1,44 @@
-<ion-view view-title="{{ user.name }}">
-  <ion-content scroll="false" class="padding">
+<ion-view can-swipe-back="false" view-title="{{ user.name }}">
+  <ion-content scroll="false" class="bg_cardfront padding">
 		<div class="container">
-  			<div class="row row-center left1">
-		    	<img class="padding col center_card {{ center_card_class }}" on-swipe-up="onSwipeUp()" min-width="12px" height="12px" on-double-tap="toogleCardAction()" ng-src="{{ selected_card }}">
-			</div>
-		</div>
 
+  			<div class="row row-center left1">
+		    	<img class="padding col center_card {{ Game.Hand.center_card_class }}" on-swipe-up="play_a_card()" min-width="12px" height="12px" on-double-tap="toogleCardAction()" ng-src="{{ Game.Hand.selected_card.image }}" ng-if="Game.Hand.playercards.length >= 1"/>
+
+			</div>
+		<h3 class="text-center" style="color:white;" ng-show="Game.Hand.playercards.length <= 0">No cards here on your hand!</h3>
+        
+		</div>
+		<div class="row row-center vertical_center" ng-show="Game.Hand.playercards.length <= 0">
+			<ion-spinner icon="ripple" class="col list text-center col spinner-energized"></ion-spinner>
+		</div>
 		<div class="row row-center div_action_buttons">
-	  		<div class="button-bar bar-dark action_buttons" ng-show="toogle_card_action">
-			  <a class="button">Play</a>
-			  <a class="button">Drop</a>
-			  <a class="button">hide</a>
+			<div class="button-bar bar-dark action_buttons" ng-show="Game.Hand.toogle_card_action">
+			  <a class="button" ng-click="play_a_card()">Play</a>
+			  <a class="button" ng-click="show_walkthrough()">Help</a>
+			  <a class="button" ng-click="Game.Hand.toogle_card_action=false">hide</a>
 			</div>
 		</div>
 		
-		<div class="row div_footer">
-	  		<ion-scroll direction="x">
-				<img class="box {{ is_selected() }}" ng-repeat="card in playercards" ng-click="select_card(card_maping(card.card))" src="{{ card_maping(card.card).image }}">
+		<div class="row div_footer"  ng-if="Game.Hand.playercards.length >= 1">
+			<ion-scroll direction="x">
+				<img class="box {{ is_selected() }}" ng-repeat="card in Game.Hand.playercards" ng-click="select_card(card_maping(card.card))" src="{{ card_maping(card.card).image }}">
 			</ion-scroll>
 		</div>
-    	
+    	<walkthrough id="walkthrough_1"
+	        walkthrough-type="transparency"
+	        is-active="walkthrough_one" on-walkthrough-hide="hide_walkthrough(1)">
+	        <img src="images/walkthrough_image_mobile_one.png" style="height: 100%; width: 100%;"/>
+	    </walkthrough>
+	    <walkthrough id="walkthrough_2"
+	        walkthrough-type="transparency"
+	        is-active="walkthrough_two" on-walkthrough-hide="hide_walkthrough(2)">
+	        <img src="images/walkthrough_image_mobile_two.png" style="height: 100%; width: 100%;"/>
+	    </walkthrough>
+	    <walkthrough id="walkthrough_3"
+	        walkthrough-type="transparency"
+	        is-active="walkthrough_three" on-walkthrough-hide="hide_walkthrough(3)">
+	        <img src="images/walkthrough_image_mobile_three.png" style="height: 100%; width: 100%;"/>
+	    </walkthrough>
   </ion-content>
 </ion-view>

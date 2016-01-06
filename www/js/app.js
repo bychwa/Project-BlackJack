@@ -1,10 +1,8 @@
 angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform,$cordovaStatusbar) {
-
-
+.run(function($ionicPlatform,$cordovaStatusbar,$ionicPopup) {
+  
   $ionicPlatform.ready(function() {
-    
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -56,6 +54,7 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     templateUrl: 'templates/player-hand.html',
     controller: 'PlayerHandGameCtrl'
   })
+  
   .state('game-table', {
     url: '/game-table',
     templateUrl: 'templates/game-table.html',
@@ -65,20 +64,7 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     url: '/table',
     templateUrl: 'templates/table.html',
     controller: 'TableCtrl'
-  })
-
-  .state('all-views', {
-    url: '/all-views',
-    templateUrl: 'templates/all-views.html',
-    controller: 'AllViewsCtrl'
-  })
-  
-.state('options', {
-    cache: false,        
-    url: '/options',
-    templateUrl: 'templates/options.html',
-    controller: 'OptionsCtrl'
-});
+  });
 
   $urlRouterProvider.otherwise('/home-usertype');
 
