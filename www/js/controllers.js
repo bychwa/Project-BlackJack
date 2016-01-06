@@ -309,36 +309,7 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast','ng-walkthrough
 
     $scope.Game.Table.toogle_card_action=false;
     $scope.Game.Table.pressed_card=null;
-    $scope.back_card_selected_counter = 0;
     
-    // $scope.backgrounds = ["../faces/back.png", "../faces/back_old2.png"];
-    // $scope.back_card_selected = $scope.backgrounds[$scope.back_card_selected_counter];
-    
-    // $scope.get_selected_back = function() {
-    //     return $scope.back_card_selected;
-    // };
-    // $scope.update_back_card = function(counter) {
-    //     $scope.back_card_selected_counter = counter % $scope.backgrounds.length;
-    //     // Update back card 
-    //     $scope.back_card_selected = $scope.backgrounds[$scope.back_card_selected_counter];
-
-    // };
-    // $scope.select_previous_back_card = function() {
-    //     var counter = $scope.back_card_selected_counter;
-    //     if (counter == 0) { counter = $scope.backgrounds.length;}
-    //     counter--;
-    //     $scope.update_back_card(counter);
-    // }; 
-    // $scope.select_next_back_card = function() {
-    //     var counter = $scope.back_card_selected_counter;
-    //     counter++;
-    //     $scope.update_back_card(counter);
-    // }; 
-    // $scope.is_back_card_selected = function(back_card) {
-    //     console.log("is_back_card_selected called ");
-    //     console.log(back_card);
-    //     return $scope.back_card_selected == back_card;
-    // };
     $scope.Game.Table.card_background={};
 
     $scope.backgrounds = [
@@ -820,71 +791,4 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast','ng-walkthrough
     });
 
 
-})
-
-.controller('AllViewsCtrl', function($scope,$rootScope, $state) {
-    $scope.views = ["Home-AcceptInvitation", "Home-InviteUsers", "Home-Username", "Home-Usertype",
-                    "Player-Hand", "Player-Waiting", "Table", "Game-Table", "Options"];
-    $scope.get_views=function(){
-      return 0;
-    };
-})
-
-.controller('OptionsCtrl', function($scope,$rootScope, $state) {
-    // TODO: Add functions here
-
-    $rootScope.debug=function(stringToDebug){
-          console.log("OptionsCtrl called!");  
-          console.log("OptionsCtrl: " + stringToDebug); 
-    };
-    $scope.$on("$ionicView.beforeEnter", function() {
-        console.log("Options is entering!");  
-    });
-})
-
-.controller('TableCtrl', function($scope, $ionicModal) {
-    $ionicModal.fromTemplateUrl('templates/options.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    $scope.modal = modal
-  })  
-
-  $scope.openModal = function() {
-    $scope.modal.show()
-  }
-
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-  };
-
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
-})
-
-.controller('ModalCtrl', function($scope, $ionicModal) {
-  $scope.contact = {
-    name: 'Mittens Cat',
-    info: 'Tap anywhere on the card to open the modal'
-  }
-
-  $ionicModal.fromTemplateUrl('contact-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    $scope.modal = modal
-  })  
-
-  $scope.openModal = function() {
-    $scope.modal.show()
-  }
-
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-  };
-
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
 });
