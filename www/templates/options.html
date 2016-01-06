@@ -1,0 +1,58 @@
+<!-- <ion-view>
+<ion-side-menus>
+<ion-side-menu-content>
+
+</ion-side-menu-content>
+<ion-side-menu side="left">
+<ion-header-bar class="bar-dark">
+<h1 class="title"> Menu </h1>
+</ion-header-bar>
+<ion-list class="list-positive">
+<ion-item></ion-item>
+</ion-list>
+<ion-list>
+<ion-item>
+<a ui-sref="options" class="item item-icon-left item-icon-right more-item">Options</a>
+</ion-item>
+</ion-list>
+<ion-list>
+<ion-item>
+<a ui-sref="quit" class="item item-icon-left item-icon-right more-item">Quit</a>
+</ion-item>
+</ion-list>
+</ion-side-menu>
+</ion-side-menus>
+</ion-view> -->
+
+<ion-modal-view>
+    <ion-header-bar align-title="left" class="bar-dark">
+        <h1 class="title" style="text-align: center">Options</h1>
+    </ion-header-bar>
+    <div class="background">
+        <ion-content scroll="false">
+            <!-- Main content -->
+            <div id="numOfCards">
+                <label style="color: black">Cards for each player</label>
+                <input type="number" name="numOfCardsToDistribute" value="4"/>
+                <br>
+                <br>
+            </div>
+            <div id="selectDeck">
+                <label style="color: black"> Deck </label>
+                <br>
+                <select>
+                    <option value="standardDeck">Standard(52 cards)</option>
+                    <option value="standardDeckWith3Jokers">Standard(+ 3 Jokers)</option>
+                    <!-- other decks could be here -->
+                </select>
+            </div>
+            <div id="sounds">
+                <ionic-checkbox style="color: black" ng-model="isChecked">Sounds</ionic-checkbox>
+            </div>
+            
+            <button class="button button-dark" ng-click="closeModal()">
+                Save
+            </button>
+        </ion-content>
+    </div>
+</ion-modal-view>

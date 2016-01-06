@@ -60,12 +60,10 @@ angular.module('starter', ['ionic', 'ngCordova','starter.controllers', 'starter.
     templateUrl: 'templates/game-table.html',
     controller: 'GameTableCtrl'
   })
-   
-
-  .state('all-views', {
-    url: '/all-views',
-    templateUrl: 'templates/all-views.html',
-    controller: 'AllViewsCtrl'
+  .state('table', {
+    url: '/table',
+    templateUrl: 'templates/table.html',
+    controller: 'TableCtrl'
   });
 
   $urlRouterProvider.otherwise('/home-usertype');

@@ -1,0 +1,72 @@
+<ion-view>
+    <ion-side-menus>
+        <ion-side-menu-content>
+            <ion-header-bar align-title="left" class="bar-dark">
+                <div class="buttons">
+                    <button class="button icon button-light ion-navicon-round" menu-toggle="left"></button>
+                </div>
+                <h1 class="title" style="text-align: center">Project BlackJack</h1>
+            </ion-header-bar>
+            <div>
+                <ion-content scroll="true" scrollbar-x="true" scrollbar-y="true">
+                    <!-- Main content -->
+                    <svg width="1300" height="800">
+                        <g>
+                            <rect x="20" y="100" width="50" height="200"
+                            style="fill:yellow;opacity:0.75" />
+                            <text dx="35" dy="160" fill="red" alignment-baseline="middle"
+                            text-anchor="middle" font-size="40" style="writing-mode: tb;">
+                                Betim
+                            </text>
+                        </g>
+                        <g>
+                            <rect x="500" y="500" width="250" height="50"
+                            style="fill:yellow;opacity:0.75" />
+                            <text x="600" y="525" fill="red" alignment-baseline="middle"
+                            text-anchor="middle" font-size="40">
+                                Jielin
+                            </text>
+                        </g>
+                        <g>
+                            <rect x="1200" y="100" width="50" height="200"
+                            style="fill:yellow;opacity:0.75" />
+                            <text x="1225" y="160" fill="red" alignment-baseline="middle"
+                            text-anchor="middle" font-size="40" style="writing-mode: tb;">
+                                Jackson
+                            </text>
+                        </g>
+                        <g>
+                            <rect x="500" y="10" width="250" height="50"
+                            style="fill:yellow;opacity:0.75" />
+                            <text x="600" y="40" fill="red" alignment-baseline="middle"
+                            text-anchor="middle" font-size="40">
+                                Clement
+                            </text>
+                        </g>
+                    </svg>
+
+                </ion-content>
+            </div>
+        </ion-side-menu-content>
+        <ion-side-menu side="left">
+            <ion-header-bar class="bar-dark">
+                <h1 class="title"> Menu </h1>
+            </ion-header-bar>
+            <ion-list class="list-positive">
+                <ion-item></ion-item>
+            </ion-list>
+            <ion-list>
+                <ion-item menu-close>
+                    <div ng-click="openModal()" ui-sref="" class="item item-icon-left item-icon-right more-item">
+                        <b> Options</b>
+                </ion-item>
+                </div>
+            </ion-list>
+            <ion-list>
+                <ion-item>
+                    <a ui-sref="quit" class="item item-icon-left item-icon-right more-item">Quit</a>
+                </ion-item>
+            </ion-list>
+        </ion-side-menu>
+    </ion-side-menus>
+</ion-view>
