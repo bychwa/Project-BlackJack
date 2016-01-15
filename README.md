@@ -10,7 +10,7 @@ However, today mobile devices are designed and have traditionally been utilized 
 
 ## Demo Video 
 
-You can find demo video of the game on [here](http://youtube.com/bychwa)
+You can find demo video of the game on [here](https://www.youtube.com/watch?v=nL0vurj2BsQ)
 
 
 ## Official Documentation
