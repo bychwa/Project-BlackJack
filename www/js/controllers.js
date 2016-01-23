@@ -7,11 +7,8 @@ angular.module('starter.controllers', ['ngCordova','ionic-toast','ng-walkthrough
     $localstorage.set('User',"");
     $localstorage.set('Game',"");
 
-    // $scope.user = $localstorage.getObject('User');
-    // $scope.audio_click = new Audio('audio/click.mp3');
-        
     $scope.click=function(){
-        // $scope.audio_click.play();
+      
     }
     
     $scope.select_usertype=function(user){

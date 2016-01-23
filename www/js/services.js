@@ -2,8 +2,6 @@ angular.module('starter.services', [])
 
 .factory('Game', function($http,$q) {
   
-  //var game = $http.get('http://api.bawalab.com/blackjack/new_game');
-  
   return {
     new: function() {
         var deferred = $q.defer();
